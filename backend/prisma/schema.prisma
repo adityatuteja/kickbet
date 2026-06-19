@@ -1,0 +1,225 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  username      String   @unique
+  alias         String   @unique
+  email         String   @unique
+  password      String
+  balance       Float    @default(0.0)
+  committed     Float    @default(0.0)
+  girlsEduTotal Float    @default(0.0)
+  isAdmin       Boolean  @default(false)
+  isRootAdmin   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  bets          Bet[]
+  donations     Donation[]
+  poolCommitments   PoolCommitment[]
+  transfersSent     PoolTransfer[] @relation("TransferFrom")
+  transfersReceived PoolTransfer[] @relation("TransferTo")
+  invitesCreated    AdminInvite[]  @relation("InviteCreatedBy")
+}
+
+// Admin invitations — only the root admin can create these
+model AdminInvite {
+  id          String       @id @default(cuid())
+  email       String       // who the invite is for
+  token       String       @unique  // one-time signup token
+  status      InviteStatus @default(PENDING)
+  createdById String
+  createdBy   User         @relation("InviteCreatedBy", fields: [createdById], references: [id])
+  acceptedAt  DateTime?
+  expiresAt   DateTime
+  createdAt   DateTime     @default(now())
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  REVOKED
+  EXPIRED
+}
+
+// A user's commitment to the pool (pledge + admin-confirmed amount)
+model PoolCommitment {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  totalCommitted  Float    @default(0.0)   // sum of all pledges by user
+  totalConfirmed  Float    @default(0.0)   // sum confirmed received by admin
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  transactions    PoolTransaction[]
+  @@unique([userId])
+}
+
+// Each individual pledge or confirmation event
+model PoolTransaction {
+  id              String              @id @default(cuid())
+  commitmentId    String
+  commitment      PoolCommitment      @relation(fields: [commitmentId], references: [id])
+  type            PoolTransactionType
+  amount          Float
+  amountReceived  Float?              // set by admin when confirming
+  receiptStatus   ReceiptStatus       @default(PENDING)
+  paymentMethodId String?             // method user says they used
+  note            String?
+  adminNote       String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
+enum PoolTransactionType {
+  USER_PLEDGE      // user says "I'm committing ₹X"
+  ADMIN_CONFIRMED  // admin confirms they received ₹X
+}
+
+enum ReceiptStatus {
+  PENDING          // waiting for admin to acknowledge
+  RECEIVED         // admin confirmed full amount received
+  PARTIAL          // admin received some but not all
+  NOT_RECEIVED     // admin says money not received yet
+}
+
+// Admin payment methods that users can pay to
+model PaymentMethod {
+  id          String          @id @default(cuid())
+  type        PaymentType
+  label       String          // friendly label e.g. "My HDFC account"
+  // Generic / shared fields
+  isActive    Boolean         @default(true)
+  notes       String?         // any extra instructions
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  // Type-specific fields (only relevant ones used per type)
+  upiId       String?         // UPI / Paytm / GPay / PhonePe handle e.g. admin@upi
+  qrCodeUrl   String?         // hosted image URL of QR
+  bankName    String?         // e.g. HDFC Bank
+  accountName String?         // e.g. "John Doe"
+  accountNo   String?
+  ifsc        String?
+  branch      String?
+  cashAddress String?         // physical address for cash drop-off
+  cashContact String?         // phone for cash arrangement
+}
+
+enum PaymentType {
+  UPI          // Paytm / GPay / PhonePe / BHIM — any UPI handle
+  QR           // scannable QR code image
+  BANK         // Indian bank with IFSC
+  CASH         // physical address / cash drop-off
+}
+
+model PoolTransfer {
+  id         String   @id @default(cuid())
+  fromUserId String
+  fromUser   User     @relation("TransferFrom", fields: [fromUserId], references: [id])
+  toUserId   String
+  toUser     User     @relation("TransferTo",   fields: [toUserId],   references: [id])
+  amount     Float
+  note       String?
+  createdAt  DateTime @default(now())
+}
+
+model Match {
+  id              String      @id @default(cuid())
+  homeTeam        String
+  awayTeam        String
+  homeFlag        String
+  awayFlag        String
+  kickoffAt       DateTime
+  bettingOpensAt  DateTime
+  bettingClosesAt DateTime
+  status          MatchStatus @default(UPCOMING)
+  stage           String      @default("Group Stage")
+  rolloverIn      Float       @default(0.0)  // pot carried over from a prior match where nobody won
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  questions       Question[]
+  bets            Bet[]
+}
+
+model Question {
+  id        String     @id @default(cuid())
+  matchId   String
+  match     Match      @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  text      String
+  order     Int
+  minStake  Float      @default(10)  // minimum bet per option (parimutuel)
+  settled   Boolean    @default(false)
+  options   Option[]
+  betPicks  BetPick[]
+}
+
+model Option {
+  id         String     @id @default(cuid())
+  questionId String
+  question   Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  label      String
+  price      Float      @default(10)  // legacy: min stake (kept for compatibility)
+  multiplier Float      @default(1)   // legacy/unused in parimutuel — odds are computed live
+  isWinner   Boolean    @default(false)
+  betPicks   BetPick[]
+}
+
+model Bet {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  matchId     String
+  match       Match     @relation(fields: [matchId], references: [id])
+  totalStake  Float
+  girlsEduPct Float     @default(5)
+  status      BetStatus @default(PENDING)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  picks       BetPick[]
+  @@unique([userId, matchId])
+}
+
+model BetPick {
+  id           String    @id @default(cuid())
+  betId        String
+  bet          Bet       @relation(fields: [betId], references: [id], onDelete: Cascade)
+  questionId   String
+  question     Question  @relation(fields: [questionId], references: [id])
+  optionId     String
+  option       Option    @relation(fields: [optionId], references: [id])
+  stake        Float
+  potentialWin Float     @default(0)  // live projection at bet time (informational)
+  actualWin    Float?                 // set at settlement (parimutuel payout)
+  eduTaken     Float     @default(0)  // girls-ed amount taken from this pick's winnings
+  isCorrect    Boolean?
+}
+
+model Donation {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  amount    Float
+  source    String   @default("bet_percentage")
+  createdAt DateTime @default(now())
+}
+
+enum MatchStatus {
+  UPCOMING
+  BETTING_OPEN
+  BETTING_CLOSED
+  LIVE
+  COMPLETED
+}
+
+enum BetStatus {
+  PENDING
+  WON
+  LOST
+  PARTIAL
+}
