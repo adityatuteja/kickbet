@@ -20,19 +20,20 @@ const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173')
   .split(',').map(s => s.trim());
 app.use(cors({
   origin: (origin, cb) => {
-    if (!origin) return cb(null, true);
+    if (!origin) return cb(null, true);                       // mobile apps, curl
     if (allowedOrigins.includes(origin)) return cb(null, true);
     let host = '';
     try { host = new URL(origin).hostname; } catch { return cb(null, false); }
     if (/\.railway\.app$/.test(host))   return cb(null, true);
-    if (/\.pages\.dev$/.test(host))     return cb(null, true);
+    if (/\.pages\.dev$/.test(host))     return cb(null, true);  // Cloudflare Pages
     if (/\.workers\.dev$/.test(host))   return cb(null, true);
     if (/^localhost(:\d+)?$/.test(host)) return cb(null, true);
+    // Don't throw — just disallow, so preflight gets a clean response
     return cb(null, false);
   },
   credentials: true
 }));
-app.options('*', cors());
+app.options('*', cors());  // ensure preflight OPTIONS are handled
 app.use(express.json());
 
 app.use('/api/auth',      authRoutes);
@@ -50,12 +51,19 @@ app.get('/api/health', (_, res) => res.json({ ok: true, ts: new Date() }));
 startCronJobs();
 
 const PORT = process.env.PORT || 3001;
+// Catch-all Express error handler — converts thrown errors into 500s instead of crashing
 app.use((err, req, res, next) => {
   console.error('Unhandled route error:', err);
   if (res.headersSent) return next(err);
   res.status(500).json({ error: err?.message || 'Internal server error' });
 });
-process.on('unhandledRejection', (reason) => console.error('Unhandled rejection:', reason));
-process.on('uncaughtException', (err) => console.error('Uncaught exception:', err));
+
+// Last-resort safety nets so one bad async path can't kill the whole server
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled promise rejection:', reason);
+});
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err);
+});
 
 app.listen(PORT, '0.0.0.0', () => console.log(`KickBet API running on :${PORT}`));

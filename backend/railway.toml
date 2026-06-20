@@ -1,0 +1,12 @@
+# railway.toml — place this in /backend for Railway deployment
+[build]
+  builder = "NIXPACKS"
+  buildCommand = "npm install && npx prisma generate && npx prisma db push"
+
+[deploy]
+  startCommand = "node server.js"
+  restartPolicyType = "ON_FAILURE"
+  restartPolicyMaxRetries = 3
+
+[[services]]
+  name = "kickbet-api"

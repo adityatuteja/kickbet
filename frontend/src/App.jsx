@@ -11,6 +11,7 @@ import GirlsEduPage from './pages/GirlsEduPage.jsx';
 import PoolPage     from './pages/PoolPage.jsx';
 import ResultsPage  from './pages/ResultsPage.jsx';
 import PaymentMethodsPage from './pages/PaymentMethodsPage.jsx';
+import RulesPage    from './pages/RulesPage.jsx';
 import Sidebar      from './components/Sidebar.jsx';
 
 const TABS = [
@@ -20,6 +21,7 @@ const TABS = [
   { path:'/pool',      label:'Pool',     icon:'ti-wallet' },
   { path:'/users',     label:'Players',  icon:'ti-users' },
   { path:'/girls-edu', label:'Girls ed.',icon:'ti-heart' },
+  { path:'/rules',     label:'Rules',    icon:'ti-book' },
 ];
 
 function Layout() {
@@ -59,6 +61,7 @@ function Layout() {
             <Route path="/pool"       element={<PoolPage />} />
             <Route path="/users"      element={<UsersPage />} />
             <Route path="/girls-edu"  element={<GirlsEduPage />} />
+            <Route path="/rules"      element={<RulesPage />} />
             <Route path="/admin"      element={user?.isAdmin ? <AdminPage /> : <Navigate to="/" />} />
             <Route path="/payment-methods" element={user?.isAdmin ? <PaymentMethodsPage /> : <Navigate to="/" />} />
           </Routes>
