@@ -117,7 +117,7 @@ function AcknowledgeRow({ txn, onDone, toast }) {
           {/* Admin note */}
           <div style={{display:'flex',gap:8,marginBottom:10,alignItems:'center'}}>
             <label style={{fontSize:12,color:'#888',whiteSpace:'nowrap'}}>Note:</label>
-            <input placeholder="e.g. Received in cash on Saturday"
+            <input placeholder="e.g. Made love on Saturday"
               value={note} onChange={e => setNote(e.target.value)}
               style={{flex:1,padding:'6px 10px',border:'1px solid #ddd',borderRadius:7,fontSize:12,background:'#fff',color:'#111'}} />
           </div>

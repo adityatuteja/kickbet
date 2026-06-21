@@ -43,7 +43,7 @@ function Layout() {
         <h1>💚 FriendLove</h1>
         <div className="topbar-right">
           <span style={{fontSize:13,opacity:.85}}>{user?.alias}</span>
-          <span className="balance-pill">Balance: $<span className="amt">{available.toFixed(2)}</span></span>
+          <span className="balance-pill">Balance: ♡ <span className="amt">{available.toFixed(2)}</span> LB</span>
           <button style={{background:'rgba(255,255,255,.15)',border:'none',color:'#fff',padding:'4px 10px',borderRadius:6,fontSize:12,cursor:'pointer'}} onClick={logout}>Sign out</button>
         </div>
       </div>

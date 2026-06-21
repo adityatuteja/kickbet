@@ -146,7 +146,7 @@ export default function GirlsEduPage() {
         <div style={{fontSize:14,fontWeight:500,marginBottom:12}}>Make a direct donation</div>
         <div style={{fontSize:13,color:'#888',marginBottom:12}}>Your available balance: <strong style={{color:'#1a7a3c'}}>♡ {((user?.balance||0)-(user?.committed||0)).toFixed(2)} LB</strong></div>
         <div className="inline-row" style={{gap:8}}>
-          <input type="number" min="1" step="1" placeholder="Amount $" value={donateAmt} onChange={e=>setDonateAmt(e.target.value)} style={{maxWidth:140}} />
+          <input type="number" min="1" step="1" placeholder="Amount (LB)" value={donateAmt} onChange={e=>setDonateAmt(e.target.value)} style={{maxWidth:140}} />
           <button className="btn btn-gold" onClick={donateDirect} disabled={donating}>{donating ? 'Processing…' : 'Donate ✦'}</button>
         </div>
       </div>
