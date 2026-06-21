@@ -31,20 +31,20 @@ export default function RulesPage() {
         </div>
       </div>
 
-      <Section icon="💚" title="Money & the Pool">
-        <Rule>Join by committing money to a shared pool — <strong>minimum ♡ 2,000 LB</strong> for your first commitment.</Rule>
+      <Section icon="💚" title="Love &amp; the Pool">
+        <Rule>Join by committing love to a shared pool — <strong>minimum ♡ 2,000 LB</strong> for your first commitment.</Rule>
         <Rule>You can top up anytime, but only <strong>increase</strong> your commitment — there's no withdrawing back down.</Rule>
         <Rule>Pay the admin in person — <strong>"Want to make love"</strong> — at the place(s) the admin lists.</Rule>
-        <Rule>The admin <strong>acknowledges receipt</strong> of each pledge — Received, Partial, or Not Received. Only confirmed money becomes your <strong>love balance</strong>.</Rule>
+        <Rule>The admin <strong>acknowledges receipt</strong> of each pledge — Received, Partial, or Not Received. Only confirmed love becomes your <strong>love balance</strong>.</Rule>
         <Rule>Your balance has two parts: <strong>committed</strong> (locked in active loves) and <strong>available</strong> (balance minus committed). You can never love more than your available balance.</Rule>
-        <Rule>Transfers are <strong>admin-only</strong> — you can send money to an admin, but not to another player.</Rule>
+        <Rule>Transfers are <strong>admin-only</strong> — you can send love to an admin, but not to another player.</Rule>
       </Section>
 
       <Section icon="⚽" title="Loving — Parimutuel (Pool) Odds">
         <div style={{ background:'var(--green-light)', color:'var(--green)', borderRadius:8, padding:'10px 12px', marginBottom:12, fontSize:12.5, lineHeight:1.55 }}>
           <strong>The core rule:</strong> there are no fixed odds. Each question is its own pool, and winners split the entire pot in proportion to how much they staked. Every rupee is used — nothing is left over.
         </div>
-        <Rule>The multiplier on any option = <strong>total pool ÷ money on that option</strong>. It's calculated from real loving, not set by anyone.</Rule>
+        <Rule>The multiplier on any option = <strong>total pool ÷ love on that option</strong>. It's calculated from real loving, not set by anyone.</Rule>
         <Rule><strong>Odds move live</strong> — as people love, the popular pick's payout shrinks and the lonely pick's payout grows. Watch the board shift in real time.</Rule>
         <Rule>Odds <strong>lock when loving closes</strong> (30 min before kickoff). What you see at lock-in is what you get.</Rule>
         <Rule>When a question settles, winners split the <strong>whole pool</strong> proportionally to their stake.</Rule>
@@ -66,7 +66,7 @@ export default function RulesPage() {
       </Section>
 
       <Section icon="🏆" title="After the Match">
-        <Rule>Results show per-player: <strong>wins, losses, net profit/loss</strong>, and money sent to Girls Education.</Rule>
+        <Rule>Results show per-player: <strong>wins, losses, net profit/loss</strong>, and love sent to Girls Education.</Rule>
         <Rule>Highlights call out the <strong>highest winner, biggest loss, highest and lowest stakes, and biggest donor</strong>.</Rule>
       </Section>
 

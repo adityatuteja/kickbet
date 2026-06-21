@@ -51,7 +51,7 @@ async function hydrateMatchWithOdds(match) {
           isWinner: o.isWinner,
           staked: live?.staked || 0,
           share: live?.share || 0,
-          liveMultiplier: live?.multiplier,  // null if no money yet
+          liveMultiplier: live?.multiplier,  // null if no love yet
         };
       })
     };

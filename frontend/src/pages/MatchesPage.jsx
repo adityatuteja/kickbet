@@ -302,7 +302,7 @@ export default function MatchesPage() {
                       <div className="bet-opts">
                         {q.options.map(o => {
                           const od   = optionOdds(m.id, q.id, o.id);
-                          const mult = od?.multiplier;       // null if no money yet
+                          const mult = od?.multiplier;       // null if no love yet
                           const share = od?.share ?? 0;
                           const staked = od?.staked ?? 0;
                           const isSel = selected?.optionId === o.id;

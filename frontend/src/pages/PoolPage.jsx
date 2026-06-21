@@ -353,9 +353,9 @@ export default function PoolPage() {
         )}
       </div>
 
-      {/* ── Transfer money to admin ──────────────────────────────── */}
+      {/* ── Transfer love to admin ──────────────────────────────── */}
       <div className="card" style={{marginBottom:12}}>
-        <div style={{fontSize:14,fontWeight:500,marginBottom:4}}>Send money to admin</div>
+        <div style={{fontSize:14,fontWeight:500,marginBottom:4}}>Send love to admin</div>
         <div style={{fontSize:12,color:'#888',marginBottom:10}}>
           Transfers can only go to an admin. Available to send: <strong style={{color:'#1a7a3c'}}>{fmtINR(available)}</strong>
         </div>
@@ -454,7 +454,7 @@ export default function PoolPage() {
         <>
           <div className="section-title"><i className="ti ti-shield" aria-hidden="true" />Admin — acknowledge commitments</div>
           <div style={{fontSize:12,color:'#888',marginBottom:12}}>
-            For each pledge, mark whether you received the money, received it partially, or have not received it yet. Confirmed amounts are credited to the player's love balance immediately.
+            For each pledge, mark whether you received the love, received it partially, or have not received it yet. Confirmed amounts are credited to the player's love balance immediately.
           </div>
           {data.commitments.length === 0 && (
             <div style={{fontSize:13,color:'#aaa',padding:'12px 0'}}>No commitments yet.</div>

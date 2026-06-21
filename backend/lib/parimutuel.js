@@ -6,7 +6,7 @@
  * projected multiplier for each option, plus pool totals.
  *
  * @param {Array<{optionId, label, staked}>} options
- * @param {number} rolloverIn  extra money added to this question's pot (from a prior no-winner roll)
+ * @param {number} rolloverIn  extra love added to this question's pot (from a prior no-winner roll)
  * @returns {{ totalPool, options: Array<{optionId, label, staked, share, multiplier}> }}
  *
  * Multiplier for an option = totalPool / stakedOnThatOption.
@@ -20,7 +20,7 @@ export function computeLiveOdds(options, rolloverIn = 0) {
   const totalPool  = baseStaked + rolloverIn;
 
   const withOdds = options.map(o => {
-    const multiplier = o.staked > 0 ? +(totalPool / o.staked).toFixed(2) : null; // null = no money yet
+    const multiplier = o.staked > 0 ? +(totalPool / o.staked).toFixed(2) : null; // null = no love yet
     const share      = baseStaked > 0 ? +(o.staked / baseStaked * 100).toFixed(1) : 0;
     return { ...o, multiplier, share };
   });

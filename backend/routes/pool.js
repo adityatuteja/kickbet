@@ -51,7 +51,7 @@ router.get('/', requireAuth, async (req, res) => {
 });
 
 // ── POST /api/pool/pledge ─────────────────────────────────────────────────────
-// User commits money to the pool (min ♡ 2,000 first time)
+// User commits love to the pool (min ♡ 2,000 first time)
 router.post('/pledge', requireAuth, async (req, res) => {
   const { amount, note, paymentMethodId } = req.body;
   const amt = parseFloat(amount);
@@ -132,7 +132,7 @@ router.post('/acknowledge', requireAdmin, async (req, res) => {
       });
     }
 
-    // Log an ADMIN_CONFIRMED transaction if money was actually received
+    // Log an ADMIN_CONFIRMED transaction if love was actually received
     if (received > 0 && delta > 0) {
       await tx.poolTransaction.create({
         data: {
@@ -166,7 +166,7 @@ router.post('/transfer', requireAuth, async (req, res) => {
   const recipient = await prisma.user.findUnique({ where: { id: toUserId } });
   if (!recipient) return res.status(404).json({ error: 'Recipient not found' });
   if (!recipient.isAdmin)
-    return res.status(403).json({ error: 'You can only transfer money to an admin' });
+    return res.status(403).json({ error: 'You can only transfer love to an admin' });
 
   await prisma.$transaction([
     prisma.user.update({ where:{ id: req.user.id }, data:{ balance:{ decrement: amt } } }),
