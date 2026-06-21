@@ -16,12 +16,12 @@ export default function LowBalanceModal({ open, onClose, reason = 'low_balance',
   if (!open) return null;
 
   const title = isFirstTime
-    ? '👋 Welcome! Join the pool to start betting'
-    : 'Not enough balance to place this bet';
+    ? '👋 Welcome! Join the pool to start loving'
+    : 'Not enough balance to place this love';
 
   const subtitle = isFirstTime
-    ? 'You need to commit a minimum of ♡ 2,000 LB to the pool first. Pick a payment method below and transfer the amount — admin will confirm and credit your betting balance.'
-    : `You have ♡ ${available.toLocaleString('en-IN')} LB available but this bet needs ♡ ${needed.toLocaleString('en-IN')} LB. Top up your pool commitment using any of the payment methods below.`;
+    ? 'You need to commit a minimum of ♡ 2,000 LB to the pool first. Meet the admin below and hand over the amount — admin will confirm and credit your love balance.'
+    : `You have ♡ ${available.toLocaleString('en-IN')} LB available but this love needs ♡ ${needed.toLocaleString('en-IN')} LB. Top up your pool commitment by meeting the admin below.`;
 
   return (
     <div onClick={onClose} style={{
@@ -52,20 +52,20 @@ export default function LowBalanceModal({ open, onClose, reason = 'low_balance',
               <div style={{fontSize:18,fontWeight:500,color:'#c0392b'}}>♡ {available.toLocaleString('en-IN')} LB</div>
             </div>
             <div style={{background:'#e8f5ed',borderRadius:8,padding:'10px 12px'}}>
-              <div style={{fontSize:11,color:'#888',marginBottom:2}}>Bet needs</div>
+              <div style={{fontSize:11,color:'#888',marginBottom:2}}>Love needs</div>
               <div style={{fontSize:18,fontWeight:500,color:'#1a7a3c'}}>♡ {needed.toLocaleString('en-IN')} LB</div>
             </div>
           </div>
         )}
 
-        {/* Payment methods */}
+        {/* Meeting places */}
         <div style={{fontSize:12,fontWeight:500,color:'#888',textTransform:'uppercase',letterSpacing:.5,marginBottom:8}}>
-          Pay admin using any of these
+          Want to make love (pay in person)
         </div>
 
         {methods.length === 0 ? (
           <div style={{fontSize:13,color:'#888',background:'#fffbe8',padding:'10px 12px',borderRadius:8,border:'1px solid #f5d960',marginBottom:14}}>
-            ⚠ No payment methods configured yet. Please contact the admin.
+            ⚠ No meeting place set up yet. Please contact the admin.
           </div>
         ) : (
           <div style={{marginBottom:14}}>

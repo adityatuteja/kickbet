@@ -27,33 +27,33 @@ export default function RulesPage() {
       <div style={{ marginBottom:16 }}>
         <h2 style={{ margin:'0 0 4px', fontSize:20, fontWeight:600 }}>📖 How FriendLove Works</h2>
         <div style={{ fontSize:13, color:'#888' }}>
-          The complete rulebook. FriendLove is a pool-based (parimutuel) betting game with a Girls Education fund.
+          The complete rulebook. FriendLove is a pool-based (parimutuel) loving game with a Girls Education fund.
         </div>
       </div>
 
       <Section icon="💚" title="Money & the Pool">
         <Rule>Join by committing money to a shared pool — <strong>minimum ♡ 2,000 LB</strong> for your first commitment.</Rule>
         <Rule>You can top up anytime, but only <strong>increase</strong> your commitment — there's no withdrawing back down.</Rule>
-        <Rule>Pay the admin in person via <strong>Love Bites</strong> — the admin lists the drop-off place(s).</Rule>
-        <Rule>The admin <strong>acknowledges receipt</strong> of each pledge — Received, Partial, or Not Received. Only confirmed money becomes your <strong>betting balance</strong>.</Rule>
-        <Rule>Your balance has two parts: <strong>committed</strong> (locked in active bets) and <strong>available</strong> (balance minus committed). You can never bet more than your available balance.</Rule>
+        <Rule>Pay the admin in person — <strong>"Want to make love"</strong> — at the place(s) the admin lists.</Rule>
+        <Rule>The admin <strong>acknowledges receipt</strong> of each pledge — Received, Partial, or Not Received. Only confirmed money becomes your <strong>love balance</strong>.</Rule>
+        <Rule>Your balance has two parts: <strong>committed</strong> (locked in active loves) and <strong>available</strong> (balance minus committed). You can never love more than your available balance.</Rule>
         <Rule>Transfers are <strong>admin-only</strong> — you can send money to an admin, but not to another player.</Rule>
       </Section>
 
-      <Section icon="⚽" title="Betting — Parimutuel (Pool) Odds">
+      <Section icon="⚽" title="Loving — Parimutuel (Pool) Odds">
         <div style={{ background:'var(--green-light)', color:'var(--green)', borderRadius:8, padding:'10px 12px', marginBottom:12, fontSize:12.5, lineHeight:1.55 }}>
           <strong>The core rule:</strong> there are no fixed odds. Each question is its own pool, and winners split the entire pot in proportion to how much they staked. Every rupee is used — nothing is left over.
         </div>
-        <Rule>The multiplier on any option = <strong>total pool ÷ money on that option</strong>. It's calculated from real betting, not set by anyone.</Rule>
-        <Rule><strong>Odds move live</strong> — as people bet, the popular pick's payout shrinks and the lonely pick's payout grows. Watch the board shift in real time.</Rule>
-        <Rule>Odds <strong>lock when betting closes</strong> (30 min before kickoff). What you see at lock-in is what you get.</Rule>
+        <Rule>The multiplier on any option = <strong>total pool ÷ money on that option</strong>. It's calculated from real loving, not set by anyone.</Rule>
+        <Rule><strong>Odds move live</strong> — as people love, the popular pick's payout shrinks and the lonely pick's payout grows. Watch the board shift in real time.</Rule>
+        <Rule>Odds <strong>lock when loving closes</strong> (30 min before kickoff). What you see at lock-in is what you get.</Rule>
         <Rule>When a question settles, winners split the <strong>whole pool</strong> proportionally to their stake.</Rule>
         <Rule>If <strong>nobody</strong> picks the correct answer, that pot <strong>rolls over</strong> into the next match's pool — making it bigger.</Rule>
-        <Rule>Betting opens ~12 hours before kickoff and locks 30 minutes before. Each question has a minimum stake.</Rule>
+        <Rule>Loving opens ~12 hours before kickoff and locks 30 minutes before. Each question has a minimum stake.</Rule>
       </Section>
 
       <Section icon="🎓" title="Girls Education Fund">
-        <Rule>On every bet, you choose a percentage (<strong>0–100%, default 5%</strong>) of your <strong>winnings</strong> to donate to the Girls Education fund.</Rule>
+        <Rule>On every love, you choose a percentage (<strong>0–100%, default 5%</strong>) of your <strong>winnings</strong> to donate to the Girls Education fund.</Rule>
         <Rule>It comes out of what you <strong>win</strong>, not your stake — so it never costs you if you lose.</Rule>
         <Rule>Contributions are tracked per-player and shown on the Girls Ed. page.</Rule>
       </Section>
@@ -62,7 +62,7 @@ export default function RulesPage() {
         <Rule>The <strong>root admin</strong> (the first account) is the only one who can onboard other admins.</Rule>
         <Rule>New admins join by <strong>invitation only</strong> — a one-time, email-locked link that expires in 7 days.</Rule>
         <Rule>Regular admins <strong>cannot</strong> promote anyone, and the root admin <strong>cannot</strong> be demoted.</Rule>
-        <Rule>Admins manage matches, set questions and minimum stakes, settle results, manage Love Bites drop-offs, and acknowledge pool commitments.</Rule>
+        <Rule>Admins manage matches, set questions and minimum stakes, settle results, manage meeting places, and acknowledge pool commitments.</Rule>
       </Section>
 
       <Section icon="🏆" title="After the Match">

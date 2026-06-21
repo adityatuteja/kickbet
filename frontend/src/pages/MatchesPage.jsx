@@ -8,8 +8,8 @@ import BetStats from '../components/BetStats.jsx';
 import LowBalanceModal from '../components/LowBalanceModal.jsx';
 
 function statusLabel(s) {
-  if (s === 'BETTING_OPEN')   return <span className="status-badge status-open">Betting open</span>;
-  if (s === 'BETTING_CLOSED') return <span className="status-badge status-locked">Betting locked</span>;
+  if (s === 'BETTING_OPEN')   return <span className="status-badge status-open">Loving open</span>;
+  if (s === 'BETTING_CLOSED') return <span className="status-badge status-locked">Loving locked</span>;
   if (s === 'LIVE')           return <span className="status-badge status-locked">Live</span>;
   if (s === 'COMPLETED')      return <span className="status-badge status-locked">Completed</span>;
   return <span className="status-badge status-upcoming">Upcoming</span>;
@@ -195,7 +195,7 @@ export default function MatchesPage() {
     try {
       const res = await api.placeBet({ matchId, picks: betPicks, girlsEduPct: pct });
       const eduAmt = res.girlsEduContribution;
-      toast(`Bets confirmed! ✓  ${pct}% of winnings (up to ♡ ${eduAmt} LB) → Girls Ed. fund`);
+      toast(`Loves confirmed! ✓  ${pct}% of winnings (up to ♡ ${eduAmt} LB) → Girls Ed. fund`);
       setPicks(p  => { const n = {...p};  delete n[matchId]; return n; });
       setAmounts(a => { const n = {...a}; delete n[matchId]; return n; });
       refreshMe();
@@ -228,11 +228,11 @@ export default function MatchesPage() {
           <span style={{fontSize:22}}>💚</span>
           <div style={{flex:1,minWidth:200}}>
             <div style={{fontSize:13,fontWeight:500,color:'#854F0B',marginBottom:2}}>
-              {hasCommitted ? 'Your available balance is ♡ 0 LB' : 'Welcome! You need a betting balance to place bets'}
+              {hasCommitted ? 'Your available balance is ♡ 0 LB' : 'Welcome! You need a balance to place loves'}
             </div>
             <div style={{fontSize:12,color:'#888'}}>
               {hasCommitted
-                ? 'Top up your pool commitment to keep betting.'
+                ? 'Top up your pool commitment to keep loving.'
                 : `Commit at least ♡ 2,000 LB to the pool — admin acknowledges and your balance is credited.`}
             </div>
           </div>
@@ -323,7 +323,7 @@ export default function MatchesPage() {
                         })}
                       </div>
                       <div style={{fontSize:10,color:'#aaa',marginTop:4}}>
-                        Min ♡ {(q.minStake ?? 10)} LB · odds move as people bet, locked when betting closes
+                        Min ♡ {(q.minStake ?? 10)} LB · odds move as people love, locked when loving closes
                       </div>
 
                       {selected && (
@@ -446,7 +446,7 @@ export default function MatchesPage() {
                       </div>
                       <div style={{color:'#666',marginBottom:6}}>
                         You need <strong>♡ {totalStake.toFixed(2)} LB</strong> but only have <strong>♡ {available.toFixed(2)} LB</strong> available.{' '}
-                        Top up your pool commitment to keep betting.
+                        Top up your pool commitment to keep loving.
                       </div>
                       <button
                         onClick={() => navigate('/pool')}
@@ -468,7 +468,7 @@ export default function MatchesPage() {
                     <button className="btn btn-gold"
                       style={{background:'#BA7517',color:'#fff'}}
                       onClick={() => navigate('/pool')}>
-                      💚 Top up your balance to bet → Pool
+                      💚 Top up your balance to love → Pool
                     </button>
                   ) : overBudget ? (
                     /* Has some balance but not enough */
@@ -499,7 +499,7 @@ export default function MatchesPage() {
                   {/* Inline balance hint */}
                   {available <= 0 && (
                     <span style={{fontSize:11,color:'#888',marginLeft:'auto'}}>
-                      💡 Your betting balance is ♡ 0 LB — commit to the pool first
+                      💡 Your balance is ♡ 0 LB — commit to the pool first
                     </span>
                   )}
                 </div>
@@ -509,7 +509,7 @@ export default function MatchesPage() {
             {m.status === 'UPCOMING' && (
               <div className="email-pill">
                 <i className="ti ti-mail" aria-hidden="true" style={{marginRight:4}} />
-                You'll get an email 12h before betting opens
+                You'll get an email 12h before loving opens
               </div>
             )}
             {(m.status === 'BETTING_CLOSED' || m.status === 'LIVE') && (

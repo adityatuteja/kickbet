@@ -28,7 +28,7 @@ function SettleMatchPanel({ matches, onSettled, toast }) {
     setSettling(true);
     try {
       const res = await api.settleMatch(selMatch, correctOpts);
-      toast('Settled! ' + res.settled + ' bets processed.');
+      toast('Settled! ' + res.settled + ' loves processed.');
       onSettled?.();
     } catch(e) { toast(e.message); }
     finally { setSettling(false); }
@@ -329,9 +329,9 @@ export default function AdminPage() {
         <button className="btn btn-green" onClick={createMatch}>Create match</button>
       </div>
 
-      {/* Bet questions */}
+      {/* Love questions */}
       <div className="admin-section">
-        <div style={{fontSize:14,fontWeight:500,marginBottom:4}}>Set bet questions</div>
+        <div style={{fontSize:14,fontWeight:500,marginBottom:4}}>Set love questions</div>
         <div style={{fontSize:12,color:'#888',marginBottom:12,background:'#e8f5ed',padding:'8px 10px',borderRadius:7}}>
           💡 Odds are <strong>parimutuel</strong> — you don't set multipliers. Winners split the whole pool in proportion to their stake. Just set the question, the options, and a minimum stake per question.
         </div>
@@ -402,11 +402,11 @@ export default function AdminPage() {
         toast={toast}
       />
 
-      {/* Tournament-wide bets */}
+      {/* Tournament-wide loves */}
       <div className="admin-section">
-        <div style={{fontSize:14,fontWeight:500,marginBottom:4}}>🏆 Tournament bets</div>
+        <div style={{fontSize:14,fontWeight:500,marginBottom:4}}>🏆 Tournament loves</div>
         <div style={{fontSize:12,color:'#888',marginBottom:12,background:'var(--green-light)',padding:'8px 10px',borderRadius:7}}>
-          Long-run bets that span the whole tournament (winner, top scorer, etc.). Same parimutuel rules. Settle each when the tournament ends.
+          Long-run loves that span the whole tournament (winner, top scorer, etc.). Same parimutuel rules. Settle each when the tournament ends.
         </div>
 
         {/* Presets */}

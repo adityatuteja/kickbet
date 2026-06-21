@@ -27,14 +27,14 @@ router.post('/', requireAdmin, async (req, res) => {
 
   if (!type || !label) return res.status(400).json({ error: 'type and label are required' });
   if (type !== 'CASH')
-    return res.status(400).json({ error: 'Only Love Bites (cash) drop-offs are supported' });
+    return res.status(400).json({ error: 'Only the in-person option is supported' });
 
   // Validate based on type
   if (type === 'UPI'  && !upiId)        return res.status(400).json({ error: 'UPI handle required' });
   if (type === 'QR'   && !qrCodeUrl)    return res.status(400).json({ error: 'QR code image URL required' });
   if (type === 'BANK' && (!accountNo || !ifsc || !accountName))
     return res.status(400).json({ error: 'Account name, number and IFSC are required for bank' });
-  if (type === 'CASH' && !cashAddress)  return res.status(400).json({ error: 'Cash drop-off address required' });
+  if (type === 'CASH' && !cashAddress)  return res.status(400).json({ error: 'A meeting place is required' });
 
   const m = await prisma.paymentMethod.create({
     data: { type, label, upiId, qrCodeUrl, bankName, accountName, accountNo, ifsc, branch, cashAddress, cashContact, notes }

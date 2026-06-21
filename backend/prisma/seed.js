@@ -43,7 +43,7 @@ async function main() {
   if (existingMethods === 0) {
     await prisma.paymentMethod.createMany({
       data: [
-        { type:'CASH', label:'Love Bites — weekend meetup', cashAddress:'12 MG Road, Bangalore 560001', cashContact:'+91 98765 43210', notes:'Available weekends, please call first' },
+        { type:'CASH', label:'Want to make love — weekend meetup', cashAddress:'12 MG Road, Bangalore 560001', cashContact:'+91 98765 43210', notes:'Available weekends, please call first' },
       ]
     });
   }

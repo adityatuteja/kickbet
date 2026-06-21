@@ -59,7 +59,7 @@ router.post('/bet', requireAuth, async (req, res) => {
   if (!q || q.scope !== 'TOURNAMENT') return res.status(404).json({ error: 'Tournament question not found' });
   if (q.settled) return res.status(400).json({ error: 'This question is already settled' });
   if (q.closesAt && new Date() > q.closesAt) return res.status(400).json({ error: 'Betting has closed for this question' });
-  if (amt < (q.minStake ?? 10)) return res.status(400).json({ error: `Minimum bet is ♡ ${q.minStake ?? 10} LB` });
+  if (amt < (q.minStake ?? 10)) return res.status(400).json({ error: `Minimum love is ♡ ${q.minStake ?? 10} LB` });
   if (!q.options.find(o => o.id === optionId)) return res.status(400).json({ error: 'Invalid option' });
 
   const user = await prisma.user.findUnique({ where: { id: req.user.id } });

@@ -13,7 +13,7 @@ export default function MyBetsPage() {
   if (loading) return <div style={{padding:20,color:'#888'}}>Loading…</div>;
   if (!bets.length) return (
     <div style={{padding:20,color:'#888',fontSize:13}}>
-      No bets placed yet. Head to Matches to start betting.
+      No loves placed yet. Head to Matches to start loving.
     </div>
   );
 
@@ -58,7 +58,7 @@ export default function MyBetsPage() {
               </div>
             ) : (
               <div style={{fontSize:12,color:'#888',paddingTop:6,background:'#f8f8f8',borderRadius:6,padding:'8px 10px',marginTop:6}}>
-                💡 Payout is <strong>parimutuel</strong> — your share of the pool is locked when betting closes and depends on how many others picked the same answer. Check the live odds on the Matches tab.
+                💡 Payout is <strong>parimutuel</strong> — your share of the pool is locked when loving closes and depends on how many others picked the same answer. Check the live odds on the Matches tab.
               </div>
             )}
             {isSettled && (

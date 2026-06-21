@@ -18,7 +18,7 @@ import Sidebar      from './components/Sidebar.jsx';
 const TABS = [
   { path:'/',           label:'Matches',  icon:'ti-calendar' },
   { path:'/tournament', label:'Tournament', icon:'ti-trophy' },
-  { path:'/my-bets',   label:'My bets',  icon:'ti-ticket' },
+  { path:'/my-bets',   label:'My loves',  icon:'ti-ticket' },
   { path:'/results',   label:'Results',  icon:'ti-trophy' },
   { path:'/pool',      label:'Pool',     icon:'ti-wallet' },
   { path:'/users',     label:'Players',  icon:'ti-users' },
@@ -34,7 +34,7 @@ function Layout() {
 
   const tabs = [...TABS, ...(user?.isAdmin ? [
     { path:'/admin',           label:'Admin',    icon:'ti-shield' },
-    { path:'/payment-methods', label:'Love Bites', icon:'ti-heart' },
+    { path:'/payment-methods', label:'Make love', icon:'ti-heart' },
   ] : [])];
 
   return (

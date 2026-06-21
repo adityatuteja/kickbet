@@ -426,9 +426,9 @@ function MatchSummary({ match, currentUser }) {
         </table>
       </div>
 
-      {/* ── Per-bet breakdown ────────────────────────────────── */}
+      {/* ── Per-love breakdown ────────────────────────────────── */}
       <div style={{marginTop:16,fontSize:13,fontWeight:500,color:'#888',display:'flex',alignItems:'center',gap:6,marginBottom:8}}>
-        <i className="ti ti-receipt" aria-hidden="true"/>Per-bet breakdown
+        <i className="ti ti-receipt" aria-hidden="true"/>Per-love breakdown
       </div>
       {betRows.map(b => (
         <div key={b.id} className="card-sm" style={{marginBottom:8,

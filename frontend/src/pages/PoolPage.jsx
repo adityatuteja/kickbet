@@ -170,7 +170,7 @@ export default function PoolPage() {
     const amt = parseFloat(pledgeAmt);
     if (!amt || amt <= 0)         { toast('Enter a valid amount'); return; }
     if (isFirstTime && amt < MIN) { toast('Minimum first commitment is ♡ 2,000 LB'); return; }
-    if (!selectedPaymentMethod)   { toast('Select a drop-off'); return; }
+    if (!selectedPaymentMethod)   { toast('Select where to meet'); return; }
     setPledging(true);
     try {
       await api.pledge(amt, pledgeNote, selectedPaymentMethod);
@@ -238,7 +238,7 @@ export default function PoolPage() {
             ['I committed',     fmtINR(myCommitted),       '#1a7a3c'],
             ['Admin confirmed', fmtINR(myConfirmed),        '#1a56c4'],
             ['Pending',         fmtINR(myPending),          '#854F0B'],
-            ['Betting balance', fmtINR(user?.balance||0),   '#111'],
+            ['Love balance', fmtINR(user?.balance||0),   '#111'],
             ['Available',       fmtINR(available),           '#1a7a3c'],
           ].map(([l,v,c]) => (
             <div key={l} style={{background:'#f8f8f8',borderRadius:8,padding:'10px 12px'}}>
@@ -255,7 +255,7 @@ export default function PoolPage() {
           </div>
           {isFirstTime && (
             <div style={{fontSize:12,color:'#854F0B',marginBottom:10,background:'#fffbe8',padding:'8px 10px',borderRadius:7,border:'1px solid #f5d960'}}>
-              Minimum first commitment is <strong>♡ 2,000 LB</strong>. Pay the admin in person ("Love Bites") — then they confirm receipt and credits your betting balance.
+              Minimum first commitment is <strong>♡ 2,000 LB</strong>. Meet the admin in person ("Want to make love") — then they confirm receipt and credit your love balance.
             </div>
           )}
 
@@ -279,13 +279,13 @@ export default function PoolPage() {
             </div>
           )}
 
-          {/* Step 2: pick payment method */}
+          {/* Step 2: pick meeting place */}
           {parseFloat(pledgeAmt) > 0 && (
             <>
-              <div style={{fontSize:11,color:'#888',fontWeight:500,textTransform:'uppercase',letterSpacing:.5,margin:'14px 0 6px'}}>Step 2 · Where to pay (Love Bites)</div>
+              <div style={{fontSize:11,color:'#888',fontWeight:500,textTransform:'uppercase',letterSpacing:.5,margin:'14px 0 6px'}}>Step 2 · Where to meet (Want to make love)</div>
               {paymentMethods.length === 0 && (
                 <div style={{fontSize:12,color:'#888',background:'#fffbe8',padding:'8px 10px',borderRadius:7,border:'1px solid #f5d960',marginBottom:8}}>
-                  ⚠ No Love Bites drop-off set up yet. Ask the admin to add one first.
+                  ⚠ No meeting place set up yet. Ask the admin to add one first.
                 </div>
               )}
               {paymentMethods.map(m => (
@@ -308,7 +308,7 @@ export default function PoolPage() {
               onClick={doPledge}
               disabled={pledging || !selectedPaymentMethod || (isFirstTime && parseFloat(pledgeAmt) < MIN)}>
               {pledging ? 'Saving…' :
-                !selectedPaymentMethod  ? 'Select a drop-off ↑' :
+                !selectedPaymentMethod  ? 'Select where to meet ↑' :
                 isFirstTime             ? `Commit ♡ ${parseFloat(pledgeAmt).toLocaleString('en-IN')} LB` :
                                           `Top up ♡ ${parseFloat(pledgeAmt).toLocaleString('en-IN')} LB`}
             </button>
@@ -454,7 +454,7 @@ export default function PoolPage() {
         <>
           <div className="section-title"><i className="ti ti-shield" aria-hidden="true" />Admin — acknowledge commitments</div>
           <div style={{fontSize:12,color:'#888',marginBottom:12}}>
-            For each pledge, mark whether you received the money, received it partially, or have not received it yet. Confirmed amounts are credited to the player's betting balance immediately.
+            For each pledge, mark whether you received the money, received it partially, or have not received it yet. Confirmed amounts are credited to the player's love balance immediately.
           </div>
           {data.commitments.length === 0 && (
             <div style={{fontSize:13,color:'#aaa',padding:'12px 0'}}>No commitments yet.</div>

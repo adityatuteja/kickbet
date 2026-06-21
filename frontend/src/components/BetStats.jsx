@@ -13,7 +13,7 @@ export default function BetStats({ matchId }) {
 
   useEffect(() => { api.getStats(matchId).then(setStats).catch(console.error); }, [matchId]);
 
-  if (!stats.length) return <div style={{fontSize:12,color:'#888',padding:'10px 0'}}>No bet data yet.</div>;
+  if (!stats.length) return <div style={{fontSize:12,color:'#888',padding:'10px 0'}}>No love data yet.</div>;
 
   return (
     <div style={{marginTop:14}}>

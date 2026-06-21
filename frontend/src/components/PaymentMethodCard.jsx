@@ -2,7 +2,7 @@
 // Reusable display + copy buttons for a single payment method.
 
 const TYPE_META = {
-  CASH: { icon:'♡', label:'Love Bites — pay in person' },
+  CASH: { icon:'♡', label:'Want to make love — in person' },
 };
 
 function copy(text, onCopied) {
@@ -83,7 +83,7 @@ export default function PaymentMethodCard({ method, selected, onSelect, onCopied
         <div style={{background:'#f8f8f8',borderRadius:7,padding:'8px 10px'}}>
           {method.cashAddress && (
             <div style={{marginBottom:method.cashContact?6:0}}>
-              <div style={{fontSize:10,color:'#888',marginBottom:2}}>Drop-off address</div>
+              <div style={{fontSize:10,color:'#888',marginBottom:2}}>Where to meet</div>
               <div style={{fontSize:12,lineHeight:1.4}}>{method.cashAddress}</div>
             </div>
           )}

@@ -58,7 +58,7 @@ export default function TournamentPage() {
     setSaving(s => ({ ...s, [q.questionId]: true }));
     try {
       await api.tournamentBet(q.questionId, optionId, amt, eduPct[q.questionId] ?? 5);
-      toast('Tournament bet placed!');
+      toast('Tournament love placed!');
       setPicks(p => { const n={...p}; delete n[q.questionId]; return n; });
       setAmounts(a => { const n={...a}; delete n[q.questionId]; return n; });
       load(); refreshMe();
@@ -70,28 +70,28 @@ export default function TournamentPage() {
     }
   }
 
-  if (loading) return <div style={{padding:20,color:'#888'}}>Loading tournament bets…</div>;
+  if (loading) return <div style={{padding:20,color:'#888'}}>Loading tournament loves…</div>;
 
   return (
     <div>
       <Toast />
       <div style={{ marginBottom:16 }}>
-        <h2 style={{ margin:'0 0 4px', fontSize:20, fontWeight:600 }}>🏆 Tournament Bets</h2>
+        <h2 style={{ margin:'0 0 4px', fontSize:20, fontWeight:600 }}>🏆 Tournament Loves</h2>
         <div style={{ fontSize:13, color:'#888' }}>
-          Long-run bets that settle when the tournament ends — winner, top scorer, and more. Same parimutuel rules: the pool is split among winners.
+          Long-run loves that settle when the tournament ends — winner, top scorer, and more. Same parimutuel rules: the pool is split among winners.
         </div>
       </div>
 
       {available <= 0 && (
         <div style={{ background:'var(--gold-light)', border:'1px solid #f5d960', borderRadius:10, padding:'10px 14px', marginBottom:14, display:'flex', justifyContent:'space-between', alignItems:'center', gap:10, flexWrap:'wrap' }}>
-          <span style={{ fontSize:13, color:'#854F0B' }}>💚 Your balance is ♡ 0 LB — commit to the pool to bet.</span>
+          <span style={{ fontSize:13, color:'#854F0B' }}>💚 Your balance is ♡ 0 LB — commit to the pool to love.</span>
           <button className="btn btn-gold" style={{background:'var(--gold)',color:'#fff'}} onClick={() => navigate('/pool')}>Go to Pool →</button>
         </div>
       )}
 
       {questions.length === 0 && (
         <div className="card" style={{ textAlign:'center', color:'#888', padding:'30px 20px' }}>
-          No tournament bets are open yet. Check back once the admin adds them.
+          No tournament loves are open yet. Check back once the admin adds them.
         </div>
       )}
 
@@ -111,7 +111,7 @@ export default function TournamentPage() {
 
             {mine && (
               <div style={{ fontSize:12, background:'var(--green-light)', color:'var(--green)', padding:'6px 10px', borderRadius:7, marginBottom:10 }}>
-                ✓ Your bet: <strong>{mine.picks[0]?.option?.label}</strong> · {fmt(mine.totalStake)} {q.settled ? '(settled)' : '— you can change it until it closes'}
+                ✓ Your love: <strong>{mine.picks[0]?.option?.label}</strong> · {fmt(mine.totalStake)} {q.settled ? '(settled)' : '— you can change it until it closes'}
               </div>
             )}
 
@@ -137,7 +137,7 @@ export default function TournamentPage() {
             {q.settled ? (
               <div style={{ fontSize:12, color:'#888' }}>This question has been settled.</div>
             ) : closed ? (
-              <div style={{ fontSize:12, color:'var(--red)' }}>Betting closed for this question.</div>
+              <div style={{ fontSize:12, color:'var(--red)' }}>Loving closed for this question.</div>
             ) : selected && (
               <div>
                 <div style={{ display:'flex', gap:10, alignItems:'center', flexWrap:'wrap', marginBottom:8 }}>
@@ -161,13 +161,13 @@ export default function TournamentPage() {
                 </div>
 
                 <button className="btn btn-green" disabled={saving[q.questionId]} onClick={() => place(q)}>
-                  {saving[q.questionId] ? 'Placing…' : mine ? 'Update bet' : 'Place tournament bet'}
+                  {saving[q.questionId] ? 'Placing…' : mine ? 'Update love' : 'Place tournament love'}
                 </button>
               </div>
             )}
 
             <div style={{ fontSize:10, color:'#aaa', marginTop:8 }}>
-              Odds move live as people bet · locked &amp; split when the tournament settles
+              Odds move live as people love · locked &amp; split when the tournament settles
               {q.closesAt && ` · closes ${new Date(q.closesAt).toLocaleDateString('en-IN')}`}
             </div>
           </div>

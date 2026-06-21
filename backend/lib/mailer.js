@@ -11,17 +11,17 @@ export async function sendMatchNotification(email, alias, match) {
   if (!process.env.SMTP_USER) return; // skip if not configured
   const kickoff = new Date(match.kickoffAt).toUTCString();
   await transporter.sendMail({
-    from: `"KickBet" <${process.env.SMTP_USER}>`,
+    from: `"FriendLove" <${process.env.SMTP_USER}>`,
     to: email,
-    subject: `⚽ Betting opens: ${match.homeTeam} vs ${match.awayTeam}`,
+    subject: `⚽ Loving opens: ${match.homeTeam} vs ${match.awayTeam}`,
     html: `
       <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px">
         <h2 style="color:#1a7a3c">Hey ${alias}!</h2>
-        <p>Bets are now open for <strong>${match.homeFlag} ${match.homeTeam} vs ${match.awayFlag} ${match.awayTeam}</strong>.</p>
+        <p>Loving is now open for <strong>${match.homeFlag} ${match.homeTeam} vs ${match.awayFlag} ${match.awayTeam}</strong>.</p>
         <p>Kickoff: <strong>${kickoff}</strong></p>
-        <p>Betting closes 30 minutes before kickoff. Don't miss it!</p>
-        <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}" style="display:inline-block;margin-top:16px;padding:12px 24px;background:#1a7a3c;color:#fff;border-radius:8px;text-decoration:none;font-weight:500">Place your bets →</a>
-        <p style="margin-top:24px;font-size:12px;color:#888">5% of every bet you place goes to the Girls Education Fund. Thank you for playing responsibly.</p>
+        <p>Loving closes 30 minutes before kickoff. Don't miss it!</p>
+        <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}" style="display:inline-block;margin-top:16px;padding:12px 24px;background:#1a7a3c;color:#fff;border-radius:8px;text-decoration:none;font-weight:500">Place your loves →</a>
+        <p style="margin-top:24px;font-size:12px;color:#888">5% of every love you place goes to the Girls Education Fund. Thank you for playing responsibly.</p>
       </div>
     `
   });
@@ -42,7 +42,7 @@ export async function sendResultNotification(email, alias, match, result) {
   ].join('');
 
   await transporter.sendMail({
-    from: `"KickBet" <${process.env.SMTP_USER}>`,
+    from: `"FriendLove" <${process.env.SMTP_USER}>`,
     to: email,
     subject: `⚽ Match result: ${match.homeTeam} vs ${match.awayTeam}`,
     html: `
@@ -68,13 +68,13 @@ export async function sendResultNotification(email, alias, match, result) {
 export async function sendAdminInvite(email, link, expiresAt) {
   if (!process.env.SMTP_USER) return;
   await transporter.sendMail({
-    from: `"KickBet" <${process.env.SMTP_USER}>`,
+    from: `"FriendLove" <${process.env.SMTP_USER}>`,
     to: email,
-    subject: '⚽ You\'re invited to be a KickBet admin',
+    subject: '⚽ You\'re invited to be a FriendLove admin',
     html: `
       <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px">
         <h2 style="color:#1a7a3c">You've been invited as an admin</h2>
-        <p>The KickBet root admin has invited you (<strong>${email}</strong>) to join as an administrator.</p>
+        <p>The FriendLove root admin has invited you (<strong>${email}</strong>) to join as an administrator.</p>
         <p>Click below to create your admin account. You must register using this exact email address.</p>
         <a href="${link}" style="display:inline-block;margin:16px 0;padding:12px 24px;background:#1a7a3c;color:#fff;border-radius:8px;text-decoration:none;font-weight:500">Accept invite & create account →</a>
         <p style="font-size:12px;color:#888">This invitation expires on ${new Date(expiresAt).toUTCString()}. If you weren't expecting this, you can ignore it.</p>

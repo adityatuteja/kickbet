@@ -28,11 +28,11 @@ router.post('/', requireAuth, async (req, res) => {
   // Validate amounts against each question's minStake
   for (const p of picks) {
     const amt = parseFloat(p.amount);
-    if (!amt || amt <= 0) return res.status(400).json({ error: 'Each bet must have a positive amount' });
+    if (!amt || amt <= 0) return res.status(400).json({ error: 'Each love must have a positive amount' });
     const q = match.questions.find(q => q.id === p.questionId);
     if (!q) return res.status(400).json({ error: 'Invalid question' });
     if (amt < (q.minStake ?? 10))
-      return res.status(400).json({ error: `Minimum bet for "${q.text}" is ♡ ${q.minStake ?? 10} LB` });
+      return res.status(400).json({ error: `Minimum love for "${q.text}" is ♡ ${q.minStake ?? 10} LB` });
   }
 
   const user = await prisma.user.findUnique({ where: { id: req.user.id } });
@@ -120,7 +120,7 @@ router.post('/', requireAuth, async (req, res) => {
     bet,
     totalStake,
     girlsEduPct: pct,
-    note: 'Payouts are parimutuel — final multiplier is locked when betting closes.'
+    note: 'Payouts are parimutuel — final multiplier is locked when loving closes.'
   });
 });
 

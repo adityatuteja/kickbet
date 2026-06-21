@@ -6,7 +6,7 @@ const FACTS = [
   'Educating girls is one of the highest-return investments for any community.',
   'Last week: 12 girls in Rajasthan received school supplies.',
   'Girls with secondary education earn up to 25% more.',
-  '5% of every bet you place feeds this fund automatically.',
+  '5% of every love you place feeds this fund automatically.',
 ];
 
 export default function Sidebar() {
@@ -25,7 +25,7 @@ export default function Sidebar() {
         <div style={{fontSize:22,marginBottom:4}}>🎓</div>
         <div style={{fontSize:13,fontWeight:500,marginBottom:4}}>Fund a future</div>
         <div className="donation-text">
-          5% of every bet goes to girls' education. You've donated <strong style={{color:'#BA7517'}}>♡ {myEdu.toFixed(0)} LB</strong> so far.
+          5% of every love goes to girls' education. You've donated <strong style={{color:'#BA7517'}}>♡ {myEdu.toFixed(0)} LB</strong> so far.
         </div>
         <div className="progress-track">
           <div className="progress-fill" style={{width:`♡ {pct} LB%`}} />
