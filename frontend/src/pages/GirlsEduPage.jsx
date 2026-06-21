@@ -65,14 +65,14 @@ export default function GirlsEduPage() {
       <Toast />
 
       <div className="metrics">
-        <div className="metric"><div className="metric-label">Total raised</div><div className="metric-val metric-gold">₹{total.toFixed(0)}</div></div>
+        <div className="metric"><div className="metric-label">Total raised</div><div className="metric-val metric-gold">♡ {total.toFixed(0)} LB</div></div>
         <div className="metric"><div className="metric-label">Contributors</div><div className="metric-val">{data.users.filter(u=>u.girlsEduTotal>0).length}</div></div>
-        <div className="metric"><div className="metric-label">Goal</div><div className="metric-val metric-green">₹{GOAL.toLocaleString('en-IN')}</div></div>
+        <div className="metric"><div className="metric-label">Goal</div><div className="metric-val metric-green">♡ {GOAL.toLocaleString('en-IN')} LB</div></div>
         <div className="metric"><div className="metric-label">Progress</div><div className="metric-val metric-gold">{pct}%</div></div>
       </div>
 
       <div style={{background:'#f0e0a0',borderRadius:8,height:10,marginBottom:16,overflow:'hidden'}}>
-        <div style={{height:10,background:'#BA7517',borderRadius:8,width:`₹{pct}%`,transition:'width .5s'}} />
+        <div style={{height:10,background:'#BA7517',borderRadius:8,width:`♡ {pct} LB%`,transition:'width .5s'}} />
       </div>
 
       <div className="charts-grid" style={{marginBottom:16}}>
@@ -83,7 +83,7 @@ export default function GirlsEduPage() {
               <Line data={{
                 labels: cumulativeDates,
                 datasets:[{ data:cumulativeAmts, borderColor:'#BA7517', backgroundColor:'rgba(186,117,23,.12)', fill:true, tension:.4, pointRadius:2, borderWidth:2 }]
-              }} options={{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{ ticks:{callback:v=>'₹'+v,font:{size:10}} }, x:{ ticks:{font:{size:10}}, grid:{display:false} } } }} />
+              }} options={{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{ ticks:{callback:v=>'♡ '+v,font:{size:10}} }, x:{ ticks:{font:{size:10}}, grid:{display:false} } } }} />
             </div>
           ) : <div style={{fontSize:12,color:'#aaa',padding:'20px 0',textAlign:'center'}}>Not enough data yet.</div>}
         </div>
@@ -100,7 +100,7 @@ export default function GirlsEduPage() {
             {sorted.filter(u=>u.girlsEduTotal>0).map((u,i) => (
               <span key={u.id} style={{display:'flex',alignItems:'center',gap:3}}>
                 <span style={{width:8,height:8,borderRadius:2,background:PALETTE[i%PALETTE.length]}} />
-                {u.alias.slice(0,10)} ₹{u.girlsEduTotal.toFixed(0)}
+                {u.alias.slice(0,10)} ♡ {u.girlsEduTotal.toFixed(0)} LB
               </span>
             ))}
           </div>
@@ -131,12 +131,12 @@ export default function GirlsEduPage() {
                 <div style={{fontSize:11,color:'#888'}}>{u.id} · {sharePct}% of fund</div>
               </div>
               <div style={{flex:2,minWidth:0}}>
-                <div className="bar-track"><div className="bar-fill" style={{width:`₹{barPct}%`,background:color}} /></div>
+                <div className="bar-track"><div className="bar-fill" style={{width:`♡ {barPct} LB%`,background:color}} /></div>
                 <div style={{fontSize:10,color:'#888'}}>
                   {u.balance > 0 ? ((u.girlsEduTotal/u.balance)*100).toFixed(1) : '0.0'}% of balance
                 </div>
               </div>
-              <div style={{fontSize:13,fontWeight:500,color:'#BA7517',minWidth:40,textAlign:'right'}}>₹{u.girlsEduTotal.toFixed(0)}</div>
+              <div style={{fontSize:13,fontWeight:500,color:'#BA7517',minWidth:40,textAlign:'right'}}>♡ {u.girlsEduTotal.toFixed(0)} LB</div>
             </div>
           );
         })}
@@ -144,7 +144,7 @@ export default function GirlsEduPage() {
 
       <div className="card" style={{marginTop:12}}>
         <div style={{fontSize:14,fontWeight:500,marginBottom:12}}>Make a direct donation</div>
-        <div style={{fontSize:13,color:'#888',marginBottom:12}}>Your available balance: <strong style={{color:'#1a7a3c'}}>₹{((user?.balance||0)-(user?.committed||0)).toFixed(2)}</strong></div>
+        <div style={{fontSize:13,color:'#888',marginBottom:12}}>Your available balance: <strong style={{color:'#1a7a3c'}}>♡ {((user?.balance||0)-(user?.committed||0)).toFixed(2)} LB</strong></div>
         <div className="inline-row" style={{gap:8}}>
           <input type="number" min="1" step="1" placeholder="Amount $" value={donateAmt} onChange={e=>setDonateAmt(e.target.value)} style={{maxWidth:140}} />
           <button className="btn btn-gold" onClick={donateDirect} disabled={donating}>{donating ? 'Processing…' : 'Donate ✦'}</button>

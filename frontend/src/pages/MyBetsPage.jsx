@@ -34,12 +34,12 @@ export default function MyBetsPage() {
               <div key={i} className="bet-pick-row">
                 <span className="pick-label">{p.question.text}: <strong>{p.option.label}</strong></span>
                 <span>
-                  <span className="pick-stake">-₹{p.stake.toFixed(2)}</span>
+                  <span className="pick-stake">-♡ {p.stake.toFixed(2)} LB</span>
                   {isSettled && (
                     <>
                       <span style={{color:'#aaa',margin:'0 4px'}}>→</span>
                       <span className="pick-win" style={{color: p.isCorrect ? '#1a7a3c' : '#c0392b'}}>
-                        {p.isCorrect ? `+₹${(p.actualWin ?? 0).toFixed(2)}` : '₹0'}
+                        {p.isCorrect ? `+♡ ${(p.actualWin ?? 0).toFixed(2)} LB` : '♡ 0 LB'}
                       </span>
                     </>
                   )}
@@ -49,12 +49,12 @@ export default function MyBetsPage() {
 
             <div style={{display:'flex',justifyContent:'space-between',fontSize:13,fontWeight:500,paddingTop:8,marginTop:4,borderTop:'0.5px solid rgba(0,0,0,0.08)'}}>
               <span>Total at stake</span>
-              <span style={{color:'#c0392b'}}>₹{totalStake.toFixed(2)}</span>
+              <span style={{color:'#c0392b'}}>♡ {totalStake.toFixed(2)} LB</span>
             </div>
             {isSettled ? (
               <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#888',paddingTop:4}}>
                 <span>Won (parimutuel payout):</span>
-                <span style={{color:'#1a7a3c',fontWeight:500}}>+₹{totalWin.toFixed(2)}</span>
+                <span style={{color:'#1a7a3c',fontWeight:500}}>+♡ {totalWin.toFixed(2)} LB</span>
               </div>
             ) : (
               <div style={{fontSize:12,color:'#888',paddingTop:6,background:'#f8f8f8',borderRadius:6,padding:'8px 10px',marginTop:6}}>
@@ -65,7 +65,7 @@ export default function MyBetsPage() {
               <div style={{display:'flex',justifyContent:'space-between',fontSize:12,paddingTop:4}}>
                 <span style={{color:'#888'}}>Girls Ed. donated ({bet.girlsEduPct ?? 5}%)</span>
                 <span style={{color:'#BA7517',fontWeight:500}}>
-                  🎓 ₹{(totalWin * ((bet.girlsEduPct ?? 5) / 100)).toFixed(2)}
+                  🎓 ♡ {(totalWin * ((bet.girlsEduPct ?? 5) / 100)).toFixed(2)} LB
                 </span>
               </div>
             )}

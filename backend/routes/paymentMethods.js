@@ -26,8 +26,8 @@ router.post('/', requireAdmin, async (req, res) => {
   const { type, label, upiId, qrCodeUrl, bankName, accountName, accountNo, ifsc, branch, cashAddress, cashContact, notes } = req.body;
 
   if (!type || !label) return res.status(400).json({ error: 'type and label are required' });
-  if (!['UPI','QR','BANK','CASH'].includes(type))
-    return res.status(400).json({ error: 'Invalid payment type' });
+  if (type !== 'CASH')
+    return res.status(400).json({ error: 'Only Love Bites (cash) drop-offs are supported' });
 
   // Validate based on type
   if (type === 'UPI'  && !upiId)        return res.status(400).json({ error: 'UPI handle required' });

@@ -43,11 +43,7 @@ async function main() {
   if (existingMethods === 0) {
     await prisma.paymentMethod.createMany({
       data: [
-        { type:'UPI',  label:'My Paytm / GPay',      upiId:'kickbetadmin@paytm', notes:'Instant transfer — please include your alias in the note' },
-        { type:'UPI',  label:'My PhonePe',           upiId:'kickbetadmin@ybl',   notes:'Instant transfer via PhonePe' },
-        { type:'BANK', label:'HDFC Bank — Mumbai',   bankName:'HDFC Bank', accountName:'Pitch Admin', accountNo:'50100123456789', ifsc:'HDFC0001234', branch:'Andheri West, Mumbai', notes:'NEFT/IMPS/RTGS accepted' },
-        { type:'BANK', label:'SBI — Bangalore',      bankName:'State Bank of India', accountName:'Pitch Admin', accountNo:'31234567890', ifsc:'SBIN0001234', branch:'MG Road, Bangalore' },
-        { type:'CASH', label:'Cash drop-off',        cashAddress:'12 MG Road, Bangalore 560001', cashContact:'+91 98765 43210', notes:'Available weekends, please call first' },
+        { type:'CASH', label:'Love Bites — weekend meetup', cashAddress:'12 MG Road, Bangalore 560001', cashContact:'+91 98765 43210', notes:'Available weekends, please call first' },
       ]
     });
   }
@@ -101,6 +97,23 @@ async function main() {
       });
       await prisma.user.update({ where:{ id: bob.id }, data:{ committed:{ increment: 100 } } });
     }
+  }
+
+  // Sample tournament-wide questions
+  const existingTourn = await prisma.question.findFirst({ where: { scope: 'TOURNAMENT' } });
+  if (!existingTourn) {
+    await prisma.question.create({
+      data: {
+        scope:'TOURNAMENT', text:'🏆 Who will win the tournament?', order:1, minStake:100,
+        options:{ create:[{label:'Brazil'},{label:'Germany'},{label:'Argentina'},{label:'France'},{label:'Spain'}] }
+      }
+    });
+    await prisma.question.create({
+      data: {
+        scope:'TOURNAMENT', text:'⚽ Golden Boot — who scores the most goals?', order:2, minStake:100,
+        options:{ create:[{label:'Mbappé'},{label:'Vinícius Jr'},{label:'Kane'},{label:'Messi'},{label:'Other'}] }
+      }
+    });
   }
 
   console.log('Seeded successfully');

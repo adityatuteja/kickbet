@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { requireAdmin, requireRootAdmin } from '../middleware/auth.js';
 import { sendMatchNotification, sendResultNotification } from '../lib/mailer.js';
 import { settleQuestion } from '../lib/parimutuel.js';
+import { MATCH_PRESETS, applyTeamNames } from '../lib/betPresets.js';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -77,6 +78,14 @@ router.put('/matches/:id/questions', requireAdmin, async (req, res) => {
 });
 
 // Promote user to admin
+// Get match-question presets, with team names filled in for a given match
+router.get('/matches/:id/presets', requireAdmin, async (req, res) => {
+  const match = await prisma.match.findUnique({ where: { id: req.params.id } });
+  if (!match) return res.status(404).json({ error: 'Match not found' });
+  const presets = MATCH_PRESETS.map(p => applyTeamNames(p, match.homeTeam, match.awayTeam));
+  res.json(presets);
+});
+
 router.post('/promote', requireRootAdmin, async (req, res) => {
   const { username } = req.body;
   const user = await prisma.user.update({ where: { username }, data: { isAdmin: true } });

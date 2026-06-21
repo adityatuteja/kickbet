@@ -2,10 +2,7 @@
 // Reusable display + copy buttons for a single payment method.
 
 const TYPE_META = {
-  UPI:  { icon:'📱', label:'UPI / Paytm / GPay / PhonePe' },
-  QR:   { icon:'🔲', label:'Scan QR code' },
-  BANK: { icon:'🏦', label:'Bank transfer (NEFT / IMPS / RTGS)' },
-  CASH: { icon:'💵', label:'Cash in person' },
+  CASH: { icon:'♡', label:'Love Bites — pay in person' },
 };
 
 function copy(text, onCopied) {
@@ -13,7 +10,7 @@ function copy(text, onCopied) {
 }
 
 export default function PaymentMethodCard({ method, selected, onSelect, onCopied, compact }) {
-  const meta = TYPE_META[method.type] || { icon:'💳', label:method.type };
+  const meta = TYPE_META[method.type] || { icon:'♡', label:method.label };
 
   return (
     <div

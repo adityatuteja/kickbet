@@ -5,7 +5,7 @@ import { requireAuth, requireAdmin } from '../middleware/auth.js';
 
 const router = Router();
 const prisma  = new PrismaClient();
-const MIN_COMMITMENT = 10000;
+const MIN_COMMITMENT = 2000;
 
 // ── GET /api/pool ─────────────────────────────────────────────────────────────
 router.get('/', requireAuth, async (req, res) => {
@@ -51,7 +51,7 @@ router.get('/', requireAuth, async (req, res) => {
 });
 
 // ── POST /api/pool/pledge ─────────────────────────────────────────────────────
-// User commits money to the pool (min ₹10,000 first time)
+// User commits money to the pool (min ♡ 2,000 first time)
 router.post('/pledge', requireAuth, async (req, res) => {
   const { amount, note, paymentMethodId } = req.body;
   const amt = parseFloat(amount);
@@ -59,7 +59,7 @@ router.post('/pledge', requireAuth, async (req, res) => {
 
   const commitment = await prisma.poolCommitment.findUnique({ where: { userId: req.user.id } });
   if (!commitment && amt < MIN_COMMITMENT)
-    return res.status(400).json({ error: `Minimum first commitment is ₹${MIN_COMMITMENT.toLocaleString('en-IN')}` });
+    return res.status(400).json({ error: `Minimum first commitment is ♡ ${MIN_COMMITMENT.toLocaleString('en-IN')} LB` });
 
   const updated = await prisma.$transaction(async (tx) => {
     const c = await tx.poolCommitment.upsert({
@@ -161,7 +161,7 @@ router.post('/transfer', requireAuth, async (req, res) => {
   const sender = await prisma.user.findUnique({ where: { id: req.user.id } });
   const avail  = sender.balance - sender.committed;
   if (amt > avail)
-    return res.status(400).json({ error: `Insufficient available balance. You have ₹${avail.toFixed(2)}` });
+    return res.status(400).json({ error: `Insufficient available balance. You have ♡ ${avail.toFixed(2)} LB` });
 
   const recipient = await prisma.user.findUnique({ where: { id: toUserId } });
   if (!recipient) return res.status(404).json({ error: 'Recipient not found' });

@@ -12,10 +12,12 @@ import PoolPage     from './pages/PoolPage.jsx';
 import ResultsPage  from './pages/ResultsPage.jsx';
 import PaymentMethodsPage from './pages/PaymentMethodsPage.jsx';
 import RulesPage    from './pages/RulesPage.jsx';
+import TournamentPage from './pages/TournamentPage.jsx';
 import Sidebar      from './components/Sidebar.jsx';
 
 const TABS = [
   { path:'/',           label:'Matches',  icon:'ti-calendar' },
+  { path:'/tournament', label:'Tournament', icon:'ti-trophy' },
   { path:'/my-bets',   label:'My bets',  icon:'ti-ticket' },
   { path:'/results',   label:'Results',  icon:'ti-trophy' },
   { path:'/pool',      label:'Pool',     icon:'ti-wallet' },
@@ -32,13 +34,13 @@ function Layout() {
 
   const tabs = [...TABS, ...(user?.isAdmin ? [
     { path:'/admin',           label:'Admin',    icon:'ti-shield' },
-    { path:'/payment-methods', label:'Payments', icon:'ti-credit-card' },
+    { path:'/payment-methods', label:'Love Bites', icon:'ti-heart' },
   ] : [])];
 
   return (
     <div className="app">
       <div className="topbar">
-        <h1>⚽ KickBet</h1>
+        <h1>💚 FriendLove</h1>
         <div className="topbar-right">
           <span style={{fontSize:13,opacity:.85}}>{user?.alias}</span>
           <span className="balance-pill">Balance: $<span className="amt">{available.toFixed(2)}</span></span>
@@ -62,6 +64,7 @@ function Layout() {
             <Route path="/users"      element={<UsersPage />} />
             <Route path="/girls-edu"  element={<GirlsEduPage />} />
             <Route path="/rules"      element={<RulesPage />} />
+            <Route path="/tournament" element={<TournamentPage />} />
             <Route path="/admin"      element={user?.isAdmin ? <AdminPage /> : <Navigate to="/" />} />
             <Route path="/payment-methods" element={user?.isAdmin ? <PaymentMethodsPage /> : <Navigate to="/" />} />
           </Routes>

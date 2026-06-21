@@ -11,7 +11,7 @@
  *
  * Multiplier for an option = totalPool / stakedOnThatOption.
  * (If that option wins, its backers split the whole pool in proportion to stake,
- *  so each ₹1 staked returns totalPool/stakedOnOption.)
+ *  so each ♡ 1 LB staked returns totalPool/stakedOnOption.)
  * Girls-education cut is applied per-bettor at settlement, not here, so the
  * displayed multiplier is the gross "pool" multiplier.
  */

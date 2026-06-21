@@ -33,12 +33,12 @@ export async function sendResultNotification(email, alias, match, result) {
 
   const statusColor = totalWon > 0 ? '#1a7a3c' : '#c0392b';
   const headline    = totalWon > 0
-    ? `You won ₹${totalWon.toFixed(2)}! 🎉`
+    ? `You won ♡ ${totalWon.toFixed(2)} LB! 🎉`
     : `Better luck next time.`;
 
   const picksHtml = [
-    ...won.map(p  => `<tr><td style="padding:6px 0;color:#1a7a3c">✓ ${p.question}: ${p.pick}</td><td style="text-align:right;color:#1a7a3c;font-weight:500">+₹${p.won.toFixed(2)}</td></tr>`),
-    ...lost.map(p => `<tr><td style="padding:6px 0;color:#c0392b">✗ ${p.question}: ${p.pick}</td><td style="text-align:right;color:#c0392b">-₹${p.staked.toFixed(2)}</td></tr>`),
+    ...won.map(p  => `<tr><td style="padding:6px 0;color:#1a7a3c">✓ ${p.question}: ${p.pick}</td><td style="text-align:right;color:#1a7a3c;font-weight:500">+♡ ${p.won.toFixed(2)} LB</td></tr>`),
+    ...lost.map(p => `<tr><td style="padding:6px 0;color:#c0392b">✗ ${p.question}: ${p.pick}</td><td style="text-align:right;color:#c0392b">-♡ ${p.staked.toFixed(2)} LB</td></tr>`),
   ].join('');
 
   await transporter.sendMail({
@@ -54,10 +54,10 @@ export async function sendResultNotification(email, alias, match, result) {
           ${picksHtml}
         </table>
         <table style="width:100%;font-size:13px;border-top:1px solid #eee;padding-top:12px">
-          <tr><td style="padding:4px 0;color:#888">Total winnings</td><td style="text-align:right;font-weight:500">₹${totalWon.toFixed(2)}</td></tr>
-          <tr><td style="padding:4px 0;color:#BA7517">🎓 Girls Ed. donation</td><td style="text-align:right;color:#BA7517;font-weight:500">₹${eduDonated.toFixed(2)}</td></tr>
-          <tr><td style="padding:4px 0;color:#1a7a3c;font-weight:500">You received</td><td style="text-align:right;color:#1a7a3c;font-weight:500">₹${netWinnings.toFixed(2)}</td></tr>
-          <tr style="border-top:1px solid #eee"><td style="padding:8px 0;font-weight:500">New balance</td><td style="text-align:right;font-weight:500;font-size:16px">₹${newBalance.toFixed(2)}</td></tr>
+          <tr><td style="padding:4px 0;color:#888">Total winnings</td><td style="text-align:right;font-weight:500">♡ ${totalWon.toFixed(2)} LB</td></tr>
+          <tr><td style="padding:4px 0;color:#BA7517">🎓 Girls Ed. donation</td><td style="text-align:right;color:#BA7517;font-weight:500">♡ ${eduDonated.toFixed(2)} LB</td></tr>
+          <tr><td style="padding:4px 0;color:#1a7a3c;font-weight:500">You received</td><td style="text-align:right;color:#1a7a3c;font-weight:500">♡ ${netWinnings.toFixed(2)} LB</td></tr>
+          <tr style="border-top:1px solid #eee"><td style="padding:8px 0;font-weight:500">New balance</td><td style="text-align:right;font-weight:500;font-size:16px">♡ ${newBalance.toFixed(2)} LB</td></tr>
         </table>
         <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}" style="display:inline-block;margin-top:20px;padding:12px 24px;background:#1a7a3c;color:#fff;border-radius:8px;text-decoration:none;font-weight:500">View your balance →</a>
       </div>

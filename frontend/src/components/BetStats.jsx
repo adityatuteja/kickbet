@@ -33,7 +33,7 @@ export default function BetStats({ matchId }) {
                 {q.options.map((o,i) => (
                   <span key={i} style={{display:'flex',alignItems:'center',gap:3}}>
                     <span style={{width:8,height:8,borderRadius:2,background:bgColors[i],flexShrink:0}} />
-                    {o.label} ({o.count}) ₹{o.totalStaked.toFixed(0)}
+                    {o.label} ({o.count}) ♡ {o.totalStaked.toFixed(0)} LB
                   </span>
                 ))}
               </div>

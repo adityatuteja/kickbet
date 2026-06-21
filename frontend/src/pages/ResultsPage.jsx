@@ -158,10 +158,10 @@ function MatchSummary({ match, currentUser }) {
       {/* ── Match-level metrics ─────────────────────────────── */}
       <div className="metrics" style={{marginBottom:14}}>
         {[
-          ['Total staked',   `₹${totalStaked.toFixed(2)}`,  '#c0392b'],
-          ['Total won',      `₹${totalWon.toFixed(2)}`,     '#1a7a3c'],
-          ['Girls Ed. fund', `₹${totalEdu.toFixed(2)}`,     '#BA7517'],
-          ['Players paid',   `₹${totalNet.toFixed(2)}`,     '#1a56c4'],
+          ['Total staked',   `♡ ${totalStaked.toFixed(2)} LB`,  '#c0392b'],
+          ['Total won',      `♡ ${totalWon.toFixed(2)} LB`,     '#1a7a3c'],
+          ['Girls Ed. fund', `♡ ${totalEdu.toFixed(2)} LB`,     '#BA7517'],
+          ['Players paid',   `♡ ${totalNet.toFixed(2)} LB`,     '#1a56c4'],
           ['Winners',        winners,                        '#1a7a3c'],
           ['Losers',         losers,                         '#c0392b'],
           ['Partial',        partial,                        '#854F0B'],
@@ -183,31 +183,31 @@ function MatchSummary({ match, currentUser }) {
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:10,marginBottom:14}}>
             {highestWinner && highestWinner.profit > 0 && (
               <Highlight icon="🏆" label="Highest winner" alias={highestWinner.user?.alias}
-                value={`+₹${highestWinner.profit.toFixed(2)}`}
+                value={`+♡ ${highestWinner.profit.toFixed(2)} LB`}
                 sub={`Won ${highestWinner.wonCount}/${highestWinner.picks.length} picks`}
                 color="#1a7a3c" bg="#e8f5ed" />
             )}
             {biggestLoser && biggestLoser.profit < 0 && (
               <Highlight icon="😔" label="Biggest loss" alias={biggestLoser.user?.alias}
-                value={`₹${biggestLoser.profit.toFixed(2)}`}
-                sub={`Staked ₹${biggestLoser.totalStake.toFixed(2)}`}
+                value={`♡ ${biggestLoser.profit.toFixed(2)} LB`}
+                sub={`Staked ♡ ${biggestLoser.totalStake.toFixed(2)} LB`}
                 color="#c0392b" bg="#fceaea" />
             )}
             {highestStaker && (
               <Highlight icon="💪" label="Highest stake" alias={highestStaker.user?.alias}
-                value={`₹${highestStaker.totalStake.toFixed(2)}`}
+                value={`♡ ${highestStaker.totalStake.toFixed(2)} LB`}
                 sub={`${highestStaker.picks.length} picks placed`}
                 color="#1a56c4" bg="#e8f0fe" />
             )}
             {lowestStaker && lowestStaker.id !== highestStaker?.id && (
               <Highlight icon="🪙" label="Lowest stake" alias={lowestStaker.user?.alias}
-                value={`₹${lowestStaker.totalStake.toFixed(2)}`}
+                value={`♡ ${lowestStaker.totalStake.toFixed(2)} LB`}
                 sub={`${lowestStaker.picks.length} picks placed`}
                 color="#555" bg="#f0f0f0" />
             )}
             {biggestDonor && biggestDonor.edu > 0 && (
               <Highlight icon="🎓" label="Biggest donor" alias={biggestDonor.user?.alias}
-                value={`₹${biggestDonor.edu.toFixed(2)}`}
+                value={`♡ ${biggestDonor.edu.toFixed(2)} LB`}
                 sub={`${biggestDonor.girlsEduPct ?? 5}% of winnings → Girls Ed.`}
                 color="#BA7517" bg="#fffbe8" />
             )}
@@ -262,10 +262,10 @@ function MatchSummary({ match, currentUser }) {
                 {p.isCorrect ? '✓' : '✗'} {p.option?.label}
               </span>
               <span style={{flex:1,textAlign:'right',fontWeight:500,color: p.isCorrect?'#1a7a3c':'#c0392b'}}>
-                {p.isCorrect ? `+₹${(p.actualWin ?? 0).toFixed(2)}` : `-₹${p.stake.toFixed(2)}`}
+                {p.isCorrect ? `+♡ ${(p.actualWin ?? 0).toFixed(2)} LB` : `-♡ ${p.stake.toFixed(2)} LB`}
               </span>
               <span style={{flex:1,textAlign:'right',fontSize:11,color:'#888'}}>
-                Staked ₹{p.stake.toFixed(2)}
+                Staked ♡ {p.stake.toFixed(2)} LB
               </span>
             </div>
           ))}
@@ -273,10 +273,10 @@ function MatchSummary({ match, currentUser }) {
           {/* Breakdown tiles */}
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(110px,1fr))',gap:8,marginTop:12}}>
             {[
-              ['Staked',        `₹${b.totalStake.toFixed(2)}`,  '#c0392b'],
-              ['Won',           `₹${b.wonTotal.toFixed(2)}`,     '#1a7a3c'],
-              [`Girls Ed. (${b.girlsEduPct??5}%)`, `₹${b.edu.toFixed(2)}`, '#BA7517'],
-              ['You received',  `₹${b.net.toFixed(2)}`,          '#1a56c4'],
+              ['Staked',        `♡ ${b.totalStake.toFixed(2)} LB`,  '#c0392b'],
+              ['Won',           `♡ ${b.wonTotal.toFixed(2)} LB`,     '#1a7a3c'],
+              [`Girls Ed. (${b.girlsEduPct??5}%)`, `♡ ${b.edu.toFixed(2)} LB`, '#BA7517'],
+              ['You received',  `♡ ${b.net.toFixed(2)} LB`,          '#1a56c4'],
             ].map(([l,v,c]) => (
               <div key={l} style={{background:'rgba(255,255,255,.7)',borderRadius:8,padding:'8px 10px',textAlign:'center'}}>
                 <div style={{fontSize:10,color:'#888',marginBottom:2}}>{l}</div>
@@ -311,7 +311,7 @@ function MatchSummary({ match, currentUser }) {
                 responsive:true, maintainAspectRatio:false,
                 plugins:{ legend:{ display:false } },
                 scales:{
-                  x:{ grid:{ display:false }, ticks:{ font:{size:10}, callback: v => '₹'+v } },
+                  x:{ grid:{ display:false }, ticks:{ font:{size:10}, callback: v => '♡ '+v } },
                   y:{ grid:{ display:false }, ticks:{ font:{size:11} } }
                 }
               }}
@@ -340,7 +340,7 @@ function MatchSummary({ match, currentUser }) {
               return (
                 <span key={b.id} style={{display:'flex',alignItems:'center',gap:3}}>
                   <span style={{width:8,height:8,borderRadius:2,background:colors[i%colors.length],flexShrink:0}}/>
-                  {b.user?.alias} ₹{b.edu.toFixed(2)}
+                  {b.user?.alias} ♡ {b.edu.toFixed(2)} LB
                 </span>
               );
             })}
@@ -391,24 +391,24 @@ function MatchSummary({ match, currentUser }) {
                         }}>
                           {pick.isCorrect ? '✓' : '✗'} {pick.option?.label}
                           <br/>
-                          <span style={{fontSize:10,color:'#aaa'}}>₹{pick.stake.toFixed(0)}</span>
+                          <span style={{fontSize:10,color:'#aaa'}}>♡ {pick.stake.toFixed(0)} LB</span>
                         </span>
                       ) : <span style={{color:'#ccc'}}>—</span>}
                     </td>
                   );
                 })}
                 <td style={{padding:'9px 12px',borderTop:'0.5px solid rgba(0,0,0,0.06)',textAlign:'right',color:'#c0392b'}}>
-                  ₹{b.totalStake.toFixed(2)}
+                  ♡ {b.totalStake.toFixed(2)} LB
                 </td>
                 <td style={{padding:'9px 12px',borderTop:'0.5px solid rgba(0,0,0,0.06)',textAlign:'right',color:'#1a7a3c',fontWeight:500}}>
-                  ₹{b.wonTotal.toFixed(2)}
+                  ♡ {b.wonTotal.toFixed(2)} LB
                 </td>
                 <td style={{padding:'9px 12px',borderTop:'0.5px solid rgba(0,0,0,0.06)',textAlign:'right',color:'#BA7517'}}>
-                  ₹{b.edu.toFixed(2)}
+                  ♡ {b.edu.toFixed(2)} LB
                   <div style={{fontSize:10,color:'#aaa'}}>{b.girlsEduPct??5}%</div>
                 </td>
                 <td style={{padding:'9px 12px',borderTop:'0.5px solid rgba(0,0,0,0.06)',textAlign:'right',color:'#1a56c4',fontWeight:500}}>
-                  ₹{b.net.toFixed(2)}
+                  ♡ {b.net.toFixed(2)} LB
                 </td>
               </tr>
             ))}
@@ -417,10 +417,10 @@ function MatchSummary({ match, currentUser }) {
               <td style={{padding:'9px 12px'}} colSpan={2 + (match.questions?.length||0)}>
                 <span style={{fontSize:12,color:'#888'}}>Totals ({bets.length} players)</span>
               </td>
-              <td style={{padding:'9px 12px',textAlign:'right',color:'#c0392b'}}>₹{totalStaked.toFixed(2)}</td>
-              <td style={{padding:'9px 12px',textAlign:'right',color:'#1a7a3c'}}>₹{totalWon.toFixed(2)}</td>
-              <td style={{padding:'9px 12px',textAlign:'right',color:'#BA7517'}}>₹{totalEdu.toFixed(2)}</td>
-              <td style={{padding:'9px 12px',textAlign:'right',color:'#1a56c4'}}>₹{totalNet.toFixed(2)}</td>
+              <td style={{padding:'9px 12px',textAlign:'right',color:'#c0392b'}}>♡ {totalStaked.toFixed(2)} LB</td>
+              <td style={{padding:'9px 12px',textAlign:'right',color:'#1a7a3c'}}>♡ {totalWon.toFixed(2)} LB</td>
+              <td style={{padding:'9px 12px',textAlign:'right',color:'#BA7517'}}>♡ {totalEdu.toFixed(2)} LB</td>
+              <td style={{padding:'9px 12px',textAlign:'right',color:'#1a56c4'}}>♡ {totalNet.toFixed(2)} LB</td>
             </tr>
           </tbody>
         </table>
@@ -442,10 +442,10 @@ function MatchSummary({ match, currentUser }) {
               {statusPill(b.status)}
             </div>
             <div style={{display:'flex',gap:12,fontSize:12}}>
-              <span style={{color:'#c0392b'}}>Staked ₹{b.totalStake.toFixed(2)}</span>
-              <span style={{color:'#1a7a3c',fontWeight:500}}>Won ₹{b.wonTotal.toFixed(2)}</span>
-              <span style={{color:'#BA7517'}}>Girls Ed. ₹{b.edu.toFixed(2)}</span>
-              <span style={{color:'#1a56c4',fontWeight:500}}>Rcvd ₹{b.net.toFixed(2)}</span>
+              <span style={{color:'#c0392b'}}>Staked ♡ {b.totalStake.toFixed(2)} LB</span>
+              <span style={{color:'#1a7a3c',fontWeight:500}}>Won ♡ {b.wonTotal.toFixed(2)} LB</span>
+              <span style={{color:'#BA7517'}}>Girls Ed. ♡ {b.edu.toFixed(2)} LB</span>
+              <span style={{color:'#1a56c4',fontWeight:500}}>Rcvd ♡ {b.net.toFixed(2)} LB</span>
             </div>
           </div>
           {b.picks.map(p => (
@@ -456,9 +456,9 @@ function MatchSummary({ match, currentUser }) {
             }}>
               <span style={{flex:3,color:'#888'}}>{p.question?.text}</span>
               <span style={{flex:1,fontWeight:500}}>{p.isCorrect?'✓':'✗'} {p.option?.label}</span>
-              <span style={{flex:1,textAlign:'center',color:'#aaa'}}>Staked ₹{p.stake.toFixed(2)}</span>
+              <span style={{flex:1,textAlign:'center',color:'#aaa'}}>Staked ♡ {p.stake.toFixed(2)} LB</span>
               <span style={{flex:1,textAlign:'right',fontWeight:500}}>
-                {p.isCorrect ? `+₹${(p.actualWin ?? 0).toFixed(2)}` : `-₹${p.stake.toFixed(2)}`}
+                {p.isCorrect ? `+♡ ${(p.actualWin ?? 0).toFixed(2)} LB` : `-♡ ${p.stake.toFixed(2)} LB`}
               </span>
             </div>
           ))}
@@ -523,7 +523,7 @@ function UserSummaryCard({ bet, rank, totalPlayers }) {
           Net {isProfit ? 'profit' : 'loss'}
         </div>
         <div style={{fontSize:20,fontWeight:600,color:isProfit?'#1a7a3c':'#c0392b'}}>
-          {isProfit ? '+' : ''}₹{bet.profit.toFixed(2)}
+          {isProfit ? '+' : ''}♡ {bet.profit.toFixed(2)} LB
         </div>
       </div>
 
@@ -531,19 +531,19 @@ function UserSummaryCard({ bet, rank, totalPlayers }) {
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,fontSize:12}}>
         <div style={{background:'#f8f8f8',borderRadius:6,padding:'6px 8px'}}>
           <div style={{fontSize:10,color:'#888'}}>Staked</div>
-          <div style={{color:'#c0392b',fontWeight:500}}>₹{bet.totalStake.toFixed(2)}</div>
+          <div style={{color:'#c0392b',fontWeight:500}}>♡ {bet.totalStake.toFixed(2)} LB</div>
         </div>
         <div style={{background:'#f8f8f8',borderRadius:6,padding:'6px 8px'}}>
           <div style={{fontSize:10,color:'#888'}}>Gross won</div>
-          <div style={{color:'#1a7a3c',fontWeight:500}}>₹{bet.wonTotal.toFixed(2)}</div>
+          <div style={{color:'#1a7a3c',fontWeight:500}}>♡ {bet.wonTotal.toFixed(2)} LB</div>
         </div>
         <div style={{background:'#fffbe8',borderRadius:6,padding:'6px 8px'}}>
           <div style={{fontSize:10,color:'#888'}}>🎓 Girls Ed.</div>
-          <div style={{color:'#BA7517',fontWeight:500}}>₹{bet.edu.toFixed(2)}</div>
+          <div style={{color:'#BA7517',fontWeight:500}}>♡ {bet.edu.toFixed(2)} LB</div>
         </div>
         <div style={{background:'#e8f0fe',borderRadius:6,padding:'6px 8px'}}>
           <div style={{fontSize:10,color:'#888'}}>Received</div>
-          <div style={{color:'#1a56c4',fontWeight:500}}>₹{bet.net.toFixed(2)}</div>
+          <div style={{color:'#1a56c4',fontWeight:500}}>♡ {bet.net.toFixed(2)} LB</div>
         </div>
       </div>
 

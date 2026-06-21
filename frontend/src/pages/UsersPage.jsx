@@ -13,10 +13,10 @@ export default function UsersPage() {
   return (
     <div>
       <div className="metrics">
-        <div className="metric"><div className="metric-label">Total pool</div><div className="metric-val metric-green">₹{total.toFixed(0)}</div></div>
+        <div className="metric"><div className="metric-label">Total pool</div><div className="metric-val metric-green">♡ {total.toFixed(0)} LB</div></div>
         <div className="metric"><div className="metric-label">Players</div><div className="metric-val">{users.length}</div></div>
-        <div className="metric"><div className="metric-label">Committed</div><div className="metric-val">₹{totalComm.toFixed(0)}</div></div>
-        <div className="metric"><div className="metric-label">Girls ed. fund</div><div className="metric-val metric-gold">₹{totalEdu.toFixed(0)}</div></div>
+        <div className="metric"><div className="metric-label">Committed</div><div className="metric-val">♡ {totalComm.toFixed(0)} LB</div></div>
+        <div className="metric"><div className="metric-label">Girls ed. fund</div><div className="metric-val metric-gold">♡ {totalEdu.toFixed(0)} LB</div></div>
       </div>
 
       <div className="card" style={{padding:0,overflow:'hidden'}}>
@@ -27,10 +27,10 @@ export default function UsersPage() {
               {users.map(u => (
                 <tr key={u.id}>
                   <td><span className="alias-badge">{u.alias}</span></td>
-                  <td>₹{u.balance.toFixed(2)}</td>
-                  <td style={{color:'#c0392b'}}>₹{u.committed.toFixed(2)}</td>
-                  <td style={{color:'#1a7a3c',fontWeight:500}}>₹{(u.balance-u.committed).toFixed(2)}</td>
-                  <td style={{color:'#BA7517',fontWeight:500}}>₹{u.girlsEduTotal.toFixed(2)}</td>
+                  <td>♡ {u.balance.toFixed(2)} LB</td>
+                  <td style={{color:'#c0392b'}}>♡ {u.committed.toFixed(2)} LB</td>
+                  <td style={{color:'#1a7a3c',fontWeight:500}}>♡ {(u.balance-u.committed).toFixed(2)} LB</td>
+                  <td style={{color:'#BA7517',fontWeight:500}}>♡ {u.girlsEduTotal.toFixed(2)} LB</td>
                 </tr>
               ))}
             </tbody>

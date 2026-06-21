@@ -5,7 +5,7 @@ import { useToast } from '../hooks/useToast.jsx';
 import PaymentMethodCard from '../components/PaymentMethodCard.jsx';
 
 const BLANK = {
-  type:'UPI', label:'',
+  type:'CASH', label:'',
   upiId:'', qrCodeUrl:'',
   bankName:'', accountName:'', accountNo:'', ifsc:'', branch:'',
   cashAddress:'', cashContact:'',
@@ -13,10 +13,7 @@ const BLANK = {
 };
 
 const TYPES = [
-  { value:'UPI',  label:'📱 UPI / Paytm / GPay / PhonePe' },
-  { value:'QR',   label:'🔲 QR Code (image URL)' },
-  { value:'BANK', label:'🏦 Bank Account' },
-  { value:'CASH', label:'💵 Cash drop-off' },
+  { value:'CASH', label:'💚 Love Bites (pay in person)' },
 ];
 
 export default function PaymentMethodsPage() {
@@ -73,9 +70,9 @@ export default function PaymentMethodsPage() {
     <div>
       <Toast />
 
-      <div className="section-title"><i className="ti ti-credit-card" aria-hidden="true" />Payment methods</div>
+      <div className="section-title"><i className="ti ti-heart" aria-hidden="true" />Love Bites</div>
       <div style={{fontSize:12,color:'#888',marginBottom:14}}>
-        These are the ways players can send you their pool commitment. Add as many UPI handles, bank accounts, QR codes, or cash drop-off locations as you want — active ones will appear when players pledge.
+        Add the place(s) where players can drop off their pool commitment in person ("Love Bites"). Active ones appear when players pledge.
       </div>
 
       {!showForm && (
@@ -99,7 +96,7 @@ export default function PaymentMethodsPage() {
 
           <div className="field">
             <label>Label (shown to players)</label>
-            <input value={form.label} onChange={set('label')} placeholder='e.g. "My HDFC account" or "Office cash drop"' />
+            <input value={form.label} onChange={set('label')} placeholder='e.g. "Saturday meetup" or "Office drop-off"' />
           </div>
 
           {form.type === 'UPI' && (

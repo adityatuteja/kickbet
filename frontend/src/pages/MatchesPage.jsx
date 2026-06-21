@@ -195,7 +195,7 @@ export default function MatchesPage() {
     try {
       const res = await api.placeBet({ matchId, picks: betPicks, girlsEduPct: pct });
       const eduAmt = res.girlsEduContribution;
-      toast(`Bets confirmed! ✓  ${pct}% of winnings (up to ₹${eduAmt}) → Girls Ed. fund`);
+      toast(`Bets confirmed! ✓  ${pct}% of winnings (up to ♡ ${eduAmt} LB) → Girls Ed. fund`);
       setPicks(p  => { const n = {...p};  delete n[matchId]; return n; });
       setAmounts(a => { const n = {...a}; delete n[matchId]; return n; });
       refreshMe();
@@ -225,15 +225,15 @@ export default function MatchesPage() {
           padding:'12px 14px',marginBottom:14,
           display:'flex',alignItems:'center',gap:12,flexWrap:'wrap'
         }}>
-          <span style={{fontSize:22}}>💰</span>
+          <span style={{fontSize:22}}>💚</span>
           <div style={{flex:1,minWidth:200}}>
             <div style={{fontSize:13,fontWeight:500,color:'#854F0B',marginBottom:2}}>
-              {hasCommitted ? 'Your available balance is ₹0' : 'Welcome! You need a betting balance to place bets'}
+              {hasCommitted ? 'Your available balance is ♡ 0 LB' : 'Welcome! You need a betting balance to place bets'}
             </div>
             <div style={{fontSize:12,color:'#888'}}>
               {hasCommitted
                 ? 'Top up your pool commitment to keep betting.'
-                : `Commit at least ₹10,000 to the pool — admin acknowledges and your balance is credited.`}
+                : `Commit at least ♡ 2,000 LB to the pool — admin acknowledges and your balance is credited.`}
             </div>
           </div>
           <button onClick={() => navigate('/pool')} style={{
@@ -296,7 +296,7 @@ export default function MatchesPage() {
                       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
                         <div className="bet-q-label" style={{marginBottom:0}}>{q.text}</div>
                         <span style={{fontSize:11,color:'#888'}}>
-                          Pool: <strong style={{color:'#1a7a3c'}}>₹{pool.toFixed(0)}</strong>
+                          Pool: <strong style={{color:'#1a7a3c'}}>♡ {pool.toFixed(0)} LB</strong>
                         </span>
                       </div>
                       <div className="bet-opts">
@@ -316,21 +316,21 @@ export default function MatchesPage() {
                                 {mult ? `${mult.toFixed(2)}×` : '—'}
                               </span>
                               <span className="opt-return" style={{fontSize:10}}>
-                                ₹{staked.toFixed(0)} · {share.toFixed(0)}%
+                                ♡ {staked.toFixed(0)} LB · {share.toFixed(0)}%
                               </span>
                             </button>
                           );
                         })}
                       </div>
                       <div style={{fontSize:10,color:'#aaa',marginTop:4}}>
-                        Min ₹{(q.minStake ?? 10)} · odds move as people bet, locked when betting closes
+                        Min ♡ {(q.minStake ?? 10)} LB · odds move as people bet, locked when betting closes
                       </div>
 
                       {selected && (
                         <div style={{display:'flex',alignItems:'center',gap:10,marginTop:8,flexWrap:'wrap'}}>
                           <label style={{fontSize:12,color:'#888',whiteSpace:'nowrap'}}>Your stake:</label>
                           <div style={{display:'flex',alignItems:'center',gap:4}}>
-                            <span style={{fontSize:13,color:'#888'}}>₹</span>
+                            <span style={{fontSize:13,color:'#888'}}>♡ </span>
                             <input
                               type="number" min="0" step="1" placeholder="0"
                               value={amt}
@@ -340,7 +340,7 @@ export default function MatchesPage() {
                           </div>
                           {projWin > 0 && (
                             <span style={{fontSize:12,color:'#1a7a3c',fontWeight:500}}>
-                              → ~₹{projWin.toFixed(2)} {projMult ? `(${projMult.toFixed(2)}×)` : ''}
+                              → ~♡ {projWin.toFixed(2)} LB {projMult ? `(${projMult.toFixed(2)}×)` : ''}
                             </span>
                           )}
                           {parseFloat(amt) > available && (
@@ -399,9 +399,9 @@ export default function MatchesPage() {
                     {totalWin > 0 && (
                       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:6}}>
                         {[
-                          ['Potential win',       `₹${totalWin.toFixed(2)}`, '#1a7a3c'],
-                          ['Girls Ed. donation',  `₹${eduAmt.toFixed(2)}`,   '#BA7517'],
-                          ['You keep',            `₹${netWin.toFixed(2)}`,   '#1a56c4'],
+                          ['Potential win',       `♡ ${totalWin.toFixed(2)} LB`, '#1a7a3c'],
+                          ['Girls Ed. donation',  `♡ ${eduAmt.toFixed(2)} LB`,   '#BA7517'],
+                          ['You keep',            `♡ ${netWin.toFixed(2)} LB`,   '#1a56c4'],
                         ].map(([label, val, color]) => (
                           <div key={label} style={{background:'#fff8e0',borderRadius:7,padding:'7px 10px',textAlign:'center'}}>
                             <div style={{fontSize:10,color:'#888',marginBottom:2}}>{label}</div>
@@ -427,10 +427,10 @@ export default function MatchesPage() {
                 {/* Summary row */}
                 <div className="stake-row" style={{marginTop:10}}>
                   <span className="stake-label">Total stake</span>
-                  <span className="stake-val">₹{totalStake.toFixed(2)}</span>
+                  <span className="stake-val">♡ {totalStake.toFixed(2)} LB</span>
                   <div className="stake-info">
-                    <span>Available: <strong>₹{available.toFixed(2)}</strong></span>
-                    {totalWin > 0 && <span>You keep: <strong>₹{netWin.toFixed(2)}</strong></span>}
+                    <span>Available: <strong>♡ {available.toFixed(2)} LB</strong></span>
+                    {totalWin > 0 && <span>You keep: <strong>♡ {netWin.toFixed(2)} LB</strong></span>}
                   </div>
                 </div>
                 {overBudget && (
@@ -445,7 +445,7 @@ export default function MatchesPage() {
                         Not enough balance for this bet
                       </div>
                       <div style={{color:'#666',marginBottom:6}}>
-                        You need <strong>₹{totalStake.toFixed(2)}</strong> but only have <strong>₹{available.toFixed(2)}</strong> available.{' '}
+                        You need <strong>♡ {totalStake.toFixed(2)} LB</strong> but only have <strong>♡ {available.toFixed(2)} LB</strong> available.{' '}
                         Top up your pool commitment to keep betting.
                       </div>
                       <button
@@ -468,7 +468,7 @@ export default function MatchesPage() {
                     <button className="btn btn-gold"
                       style={{background:'#BA7517',color:'#fff'}}
                       onClick={() => navigate('/pool')}>
-                      💰 Top up your balance to bet → Pool
+                      💚 Top up your balance to bet → Pool
                     </button>
                   ) : overBudget ? (
                     /* Has some balance but not enough */
@@ -485,7 +485,7 @@ export default function MatchesPage() {
                       Confirm bets
                       {pct > 0 && totalWin > 0 && (
                         <span style={{fontSize:11,opacity:.85,marginLeft:6}}>
-                          · ₹{eduAmt.toFixed(2)} → 🎓
+                          · ♡ {eduAmt.toFixed(2)} LB → 🎓
                         </span>
                       )}
                     </button>
@@ -499,7 +499,7 @@ export default function MatchesPage() {
                   {/* Inline balance hint */}
                   {available <= 0 && (
                     <span style={{fontSize:11,color:'#888',marginLeft:'auto'}}>
-                      💡 Your betting balance is ₹0 — commit to the pool first
+                      💡 Your betting balance is ♡ 0 LB — commit to the pool first
                     </span>
                   )}
                 </div>

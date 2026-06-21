@@ -25,12 +25,12 @@ export default function Sidebar() {
         <div style={{fontSize:22,marginBottom:4}}>🎓</div>
         <div style={{fontSize:13,fontWeight:500,marginBottom:4}}>Fund a future</div>
         <div className="donation-text">
-          5% of every bet goes to girls' education. You've donated <strong style={{color:'#BA7517'}}>₹{myEdu.toFixed(0)}</strong> so far.
+          5% of every bet goes to girls' education. You've donated <strong style={{color:'#BA7517'}}>♡ {myEdu.toFixed(0)} LB</strong> so far.
         </div>
         <div className="progress-track">
-          <div className="progress-fill" style={{width:`₹{pct}%`}} />
+          <div className="progress-fill" style={{width:`♡ {pct} LB%`}} />
         </div>
-        <div style={{fontSize:11,color:'#888',marginBottom:10}}>Goal: ₹2,000</div>
+        <div style={{fontSize:11,color:'#888',marginBottom:10}}>Goal: ♡ 2,000 LB</div>
         <button className="btn btn-gold btn-full" onClick={() => navigate('/girls-edu')}>View full breakdown →</button>
       </div>
 

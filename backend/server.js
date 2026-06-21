@@ -11,6 +11,7 @@ import donationRoutes from './routes/donations.js';
 import poolRoutes    from './routes/pool.js';
 import paymentRoutes from './routes/paymentMethods.js';
 import inviteRoutes  from './routes/invites.js';
+import tournamentRoutes from './routes/tournament.js';
 import { startCronJobs } from './lib/cron.js';
 
 const app = express();
@@ -45,6 +46,7 @@ app.use('/api/donations', donationRoutes);
 app.use('/api/pool',     poolRoutes);
 app.use('/api/payment-methods', paymentRoutes);
 app.use('/api/invites',  inviteRoutes);
+app.use('/api/tournament', tournamentRoutes);
 
 app.get('/api/health', (_, res) => res.json({ ok: true, ts: new Date() }));
 

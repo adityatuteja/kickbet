@@ -149,14 +149,21 @@ model Match {
 
 model Question {
   id        String     @id @default(cuid())
-  matchId   String
-  match     Match      @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  matchId   String?
+  match     Match?     @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  scope     QuestionScope @default(MATCH)   // MATCH = per-game, TOURNAMENT = whole tournament
   text      String
   order     Int
   minStake  Float      @default(10)  // minimum bet per option (parimutuel)
   settled   Boolean    @default(false)
+  closesAt  DateTime?                // tournament questions close at a set time; match questions follow the match
   options   Option[]
   betPicks  BetPick[]
+}
+
+enum QuestionScope {
+  MATCH
+  TOURNAMENT
 }
 
 model Option {
@@ -174,8 +181,11 @@ model Bet {
   id          String    @id @default(cuid())
   userId      String
   user        User      @relation(fields: [userId], references: [id])
-  matchId     String
-  match       Match     @relation(fields: [matchId], references: [id])
+  matchId     String?
+  match       Match?    @relation(fields: [matchId], references: [id])
+  // For tournament bets, this groups one bet per user per tournament-question
+  tournamentQuestionId String?
+  scope       QuestionScope @default(MATCH)
   totalStake  Float
   girlsEduPct Float     @default(5)
   status      BetStatus @default(PENDING)
@@ -183,6 +193,7 @@ model Bet {
   updatedAt   DateTime  @updatedAt
   picks       BetPick[]
   @@unique([userId, matchId])
+  @@unique([userId, tournamentQuestionId])
 }
 
 model BetPick {

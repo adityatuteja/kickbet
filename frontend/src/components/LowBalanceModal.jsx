@@ -20,8 +20,8 @@ export default function LowBalanceModal({ open, onClose, reason = 'low_balance',
     : 'Not enough balance to place this bet';
 
   const subtitle = isFirstTime
-    ? 'You need to commit a minimum of ₹10,000 to the pool first. Pick a payment method below and transfer the amount — admin will confirm and credit your betting balance.'
-    : `You have ₹${available.toLocaleString('en-IN')} available but this bet needs ₹${needed.toLocaleString('en-IN')}. Top up your pool commitment using any of the payment methods below.`;
+    ? 'You need to commit a minimum of ♡ 2,000 LB to the pool first. Pick a payment method below and transfer the amount — admin will confirm and credit your betting balance.'
+    : `You have ♡ ${available.toLocaleString('en-IN')} LB available but this bet needs ♡ ${needed.toLocaleString('en-IN')} LB. Top up your pool commitment using any of the payment methods below.`;
 
   return (
     <div onClick={onClose} style={{
@@ -49,11 +49,11 @@ export default function LowBalanceModal({ open, onClose, reason = 'low_balance',
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:18}}>
             <div style={{background:'#fceaea',borderRadius:8,padding:'10px 12px'}}>
               <div style={{fontSize:11,color:'#888',marginBottom:2}}>Your available</div>
-              <div style={{fontSize:18,fontWeight:500,color:'#c0392b'}}>₹{available.toLocaleString('en-IN')}</div>
+              <div style={{fontSize:18,fontWeight:500,color:'#c0392b'}}>♡ {available.toLocaleString('en-IN')} LB</div>
             </div>
             <div style={{background:'#e8f5ed',borderRadius:8,padding:'10px 12px'}}>
               <div style={{fontSize:11,color:'#888',marginBottom:2}}>Bet needs</div>
-              <div style={{fontSize:18,fontWeight:500,color:'#1a7a3c'}}>₹{needed.toLocaleString('en-IN')}</div>
+              <div style={{fontSize:18,fontWeight:500,color:'#1a7a3c'}}>♡ {needed.toLocaleString('en-IN')} LB</div>
             </div>
           </div>
         )}

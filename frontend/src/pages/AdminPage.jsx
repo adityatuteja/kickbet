@@ -97,12 +97,70 @@ export default function AdminPage() {
   const [inviteEmail, setInviteEmail] = useState('');
   const isRoot = !!user?.isRootAdmin;
 
+  // Match presets + tournament questions
+  const [matchPresets, setMatchPresets] = useState([]);
+  const [tournQs,   setTournQs]   = useState([]);
+  const [tPresets,  setTPresets]  = useState([]);
+  const [newTQ,     setNewTQ]     = useState({ text:'', minStake:100, options:['',''], closesAt:'' });
+
   useEffect(() => {
     api.getAdmins().then(setAdmins);
     api.getMatches().then(ms => { setMatches(ms); if(ms.length) setSelMatch(ms[0].id); });
     api.getAllUsers().then(setAllUsers);
+    api.getTournamentQuestions().then(setTournQs).catch(()=>{});
+    api.getTournamentPresets().then(d => setTPresets(d.tournament || [])).catch(()=>{});
     if (user?.isRootAdmin) api.listInvites().then(setInvites).catch(() => {});
   }, [user?.isRootAdmin]);
+
+  // Load match presets when selected match changes
+  useEffect(() => {
+    if (selMatch) api.getMatchPresets(selMatch).then(setMatchPresets).catch(()=>setMatchPresets([]));
+  }, [selMatch]);
+
+  // Add a preset to the current match-question builder
+  function addPresetToBuilder(preset) {
+    setQuestions(qs => [
+      ...qs.filter(q => q.text.trim() || q.options.some(o => o.label.trim())), // keep filled ones
+      { text: preset.text, order: qs.length+1, minStake: preset.minStake, options: preset.options.map(label => ({ label })) }
+    ]);
+    toast('Added: ' + preset.text);
+  }
+
+  // Tournament question CRUD
+  function tPresetToForm(p) {
+    setNewTQ({
+      text: p.text, minStake: p.minStake,
+      options: p.options.length ? [...p.options] : ['',''],
+      closesAt: ''
+    });
+    toast('Loaded preset — fill in options if needed, then add');
+  }
+  async function createTournQ() {
+    const opts = newTQ.options.map(o => o.trim()).filter(Boolean);
+    if (!newTQ.text.trim() || opts.length < 2) { toast('Need a question and 2+ options'); return; }
+    try {
+      await api.createTournamentQuestion({ text:newTQ.text, minStake:newTQ.minStake, options:opts, closesAt:newTQ.closesAt||null });
+      toast('Tournament question added');
+      setNewTQ({ text:'', minStake:100, options:['',''], closesAt:'' });
+      api.getTournamentQuestions().then(setTournQs);
+    } catch(e) { toast(e.message); }
+  }
+  async function deleteTournQ(id) {
+    if (!window.confirm('Delete this tournament question?')) return;
+    try { await api.deleteTournamentQuestion(id); toast('Deleted'); api.getTournamentQuestions().then(setTournQs); }
+    catch(e) { toast(e.message); }
+  }
+  async function settleTournQ(q) {
+    const optId = window.prompt(`Settle "${q.text}"\n\nEnter the WINNING option label exactly, or leave blank to void:\n\n${q.options.map(o=>o.label).join('\n')}`);
+    if (optId === null) return;
+    const winner = q.options.find(o => o.label.toLowerCase() === optId.trim().toLowerCase());
+    if (optId.trim() && !winner) { toast('No option matches that label'); return; }
+    try {
+      await api.settleTournamentQuestion(q.questionId, winner ? winner.optionId : null);
+      toast('Settled');
+      api.getTournamentQuestions().then(setTournQs);
+    } catch(e) { toast(e.message); }
+  }
 
   async function sendInvite() {
     const email = inviteEmail.trim();
@@ -295,6 +353,20 @@ export default function AdminPage() {
           </div>
         </div>
 
+        {matchPresets.length > 0 && (
+          <div style={{ marginBottom:12 }}>
+            <div style={{ fontSize:12, color:'#888', marginBottom:6 }}>⚡ Quick-add preset questions:</div>
+            <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
+              {matchPresets.map(p => (
+                <button key={p.key} onClick={() => addPresetToBuilder(p)}
+                  style={{ fontSize:11, padding:'5px 10px', border:'1px solid var(--green)', borderRadius:14, background:'var(--green-light)', color:'var(--green)', cursor:'pointer' }}>
+                  + {p.text}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {questions.map((q,qi) => (
           <div key={qi} style={{background:'#f8f8f8',borderRadius:8,padding:10,marginBottom:8}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:6}}>
@@ -304,7 +376,7 @@ export default function AdminPage() {
             <input placeholder="Question text" value={q.text} onChange={e => setQ(qi,'text',e.target.value)}
               style={{width:'100%',padding:'7px 9px',border:'0.5px solid #ddd',borderRadius:6,fontSize:13,marginBottom:8,background:'#fff'}} />
             <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8}}>
-              <label style={{fontSize:12,color:'#888'}}>Minimum stake ₹</label>
+              <label style={{fontSize:12,color:'#888'}}>Minimum stake ♡ </label>
               <input placeholder="10" type="number" value={q.minStake ?? ''} onChange={e => setQ(qi,'minStake',e.target.value)}
                 style={{width:90,padding:'6px 8px',border:'0.5px solid #ddd',borderRadius:6,fontSize:12,background:'#fff'}} />
             </div>
@@ -330,6 +402,79 @@ export default function AdminPage() {
         toast={toast}
       />
 
+      {/* Tournament-wide bets */}
+      <div className="admin-section">
+        <div style={{fontSize:14,fontWeight:500,marginBottom:4}}>🏆 Tournament bets</div>
+        <div style={{fontSize:12,color:'#888',marginBottom:12,background:'var(--green-light)',padding:'8px 10px',borderRadius:7}}>
+          Long-run bets that span the whole tournament (winner, top scorer, etc.). Same parimutuel rules. Settle each when the tournament ends.
+        </div>
+
+        {/* Presets */}
+        {tPresets.length > 0 && (
+          <div style={{ marginBottom:12 }}>
+            <div style={{ fontSize:12, color:'#888', marginBottom:6 }}>⚡ Start from a preset:</div>
+            <div style={{ display:'flex', gap:6, flexWrap:'wrap' }}>
+              {tPresets.map(p => (
+                <button key={p.key} onClick={() => tPresetToForm(p)}
+                  style={{ fontSize:11, padding:'5px 10px', border:'1px solid var(--gold)', borderRadius:14, background:'var(--gold-light)', color:'var(--gold)', cursor:'pointer' }}>
+                  + {p.text}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* New tournament question form */}
+        <div style={{ background:'#f8f8f8', borderRadius:8, padding:12, marginBottom:12 }}>
+          <input placeholder="Question (e.g. Who will win the World Cup?)" value={newTQ.text}
+            onChange={e => setNewTQ(t => ({ ...t, text:e.target.value }))}
+            style={{ width:'100%', padding:'8px 10px', border:'0.5px solid #ddd', borderRadius:6, fontSize:13, marginBottom:8, background:'#fff' }} />
+          <div style={{ display:'flex', gap:8, marginBottom:8, alignItems:'center', flexWrap:'wrap' }}>
+            <label style={{ fontSize:12, color:'#888' }}>Min stake ♡ </label>
+            <input type="number" value={newTQ.minStake} onChange={e => setNewTQ(t => ({ ...t, minStake:e.target.value }))}
+              style={{ width:90, padding:'6px 8px', border:'0.5px solid #ddd', borderRadius:6, fontSize:12, background:'#fff' }} />
+            <label style={{ fontSize:12, color:'#888' }}>Closes (optional)</label>
+            <input type="datetime-local" value={newTQ.closesAt} onChange={e => setNewTQ(t => ({ ...t, closesAt:e.target.value }))}
+              style={{ padding:'6px 8px', border:'0.5px solid #ddd', borderRadius:6, fontSize:12, background:'#fff' }} />
+          </div>
+          {newTQ.options.map((o,i) => (
+            <div key={i} style={{ display:'flex', gap:6, marginBottom:6 }}>
+              <input placeholder={`Option ${i+1} (team or player name)`} value={o}
+                onChange={e => setNewTQ(t => ({ ...t, options: t.options.map((x,j)=>j===i?e.target.value:x) }))}
+                style={{ flex:1, padding:'6px 8px', border:'0.5px solid #ddd', borderRadius:6, fontSize:12, background:'#fff' }} />
+              {newTQ.options.length > 2 && (
+                <button onClick={() => setNewTQ(t => ({ ...t, options: t.options.filter((_,j)=>j!==i) }))}
+                  style={{ fontSize:11, color:'var(--red)', background:'none', border:'none', cursor:'pointer' }}>×</button>
+              )}
+            </div>
+          ))}
+          <div style={{ display:'flex', gap:8, marginTop:8 }}>
+            <button className="btn btn-ghost" onClick={() => setNewTQ(t => ({ ...t, options:[...t.options,''] }))}>+ Add option</button>
+            <button className="btn btn-green" onClick={createTournQ}>Add tournament question</button>
+          </div>
+        </div>
+
+        {/* Existing tournament questions */}
+        {tournQs.map(q => (
+          <div key={q.questionId} style={{ border:'0.5px solid rgba(0,0,0,0.1)', borderRadius:8, padding:10, marginBottom:8 }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:8 }}>
+              <div>
+                <div style={{ fontSize:13, fontWeight:500 }}>{q.text}</div>
+                <div style={{ fontSize:11, color:'#888', marginTop:2 }}>
+                  {q.options.map(o => `${o.label} (${q.totalPool ? ((o.staked/q.totalPool*100)||0).toFixed(0) : 0}%)`).join(' · ')}
+                </div>
+                <div style={{ fontSize:11, color:'#888', marginTop:2 }}>Pool: ♡ {(q.totalPool||0).toLocaleString('en-IN')} LB · {q.settled ? '✓ settled' : 'open'}</div>
+              </div>
+              <div style={{ display:'flex', gap:6 }}>
+                {!q.settled && <button className="btn btn-green" style={{fontSize:11,padding:'4px 10px'}} onClick={() => settleTournQ(q)}>Settle</button>}
+                <button className="btn btn-ghost" style={{fontSize:11,padding:'4px 10px',color:'var(--red)'}} onClick={() => deleteTournQ(q.questionId)}>Delete</button>
+              </div>
+            </div>
+          </div>
+        ))}
+        {tournQs.length === 0 && <div style={{ fontSize:12, color:'#aaa' }}>No tournament questions yet.</div>}
+      </div>
+
       {/* All users */}
       <div className="admin-section">
         <div style={{fontSize:14,fontWeight:500,marginBottom:12}}>All users</div>
@@ -344,8 +489,8 @@ export default function AdminPage() {
                   <td style={{fontFamily:'monospace',fontSize:12}}>{u.username}</td>
                   <td><span className="alias-badge">{u.alias}</span></td>
                   <td style={{fontSize:12,color:'#888'}}>{u.email}</td>
-                  <td>₹{u.balance.toFixed(2)}</td>
-                  <td style={{color:'#c0392b'}}>₹{u.committed.toFixed(2)}</td>
+                  <td>♡ {u.balance.toFixed(2)} LB</td>
+                  <td style={{color:'#c0392b'}}>♡ {u.committed.toFixed(2)} LB</td>
                   <td>{u.isAdmin ? '✓' : '—'}</td>
                 </tr>
               ))}

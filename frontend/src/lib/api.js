@@ -49,6 +49,16 @@ export const api = {
   revokeInvite:   (id)     => req(`/invites/${id}/revoke`, { method:'POST' }),
   validateInvite: (token)  => req(`/invites/validate/${token}`),
 
+  // Tournament-wide bets
+  getTournamentQuestions: ()                         => req('/tournament/questions'),
+  tournamentBet:    (questionId, optionId, amount, girlsEduPct) => req('/tournament/bet', { method:'POST', body: JSON.stringify({ questionId, optionId, amount, girlsEduPct }) }),
+  getMyTournamentBets: ()                            => req('/tournament/my'),
+  getTournamentPresets: ()                           => req('/tournament/presets'),
+  createTournamentQuestion: (body)                   => req('/tournament/questions', { method:'POST', body: JSON.stringify(body) }),
+  deleteTournamentQuestion: (id)                     => req(`/tournament/questions/${id}`, { method:'DELETE' }),
+  settleTournamentQuestion: (id, winningOptionId)    => req(`/tournament/questions/${id}/settle`, { method:'POST', body: JSON.stringify({ winningOptionId }) }),
+  getMatchPresets:  (matchId)                        => req(`/admin/matches/${matchId}/presets`),
+
   // Payment methods
   getPaymentMethods:    ()        => req('/payment-methods'),
   getAllPaymentMethods: ()        => req('/payment-methods/all'),

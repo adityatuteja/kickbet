@@ -53,8 +53,8 @@ export default function AuthPage() {
     <div className="auth-wrap">
       <div className="auth-card">
         <div className="auth-logo">⚽</div>
-        <div className="auth-title">KickBet</div>
-        <div className="auth-sub">FIFA Match Betting Platform</div>
+        <div className="auth-title">FriendLove</div>
+        <div className="auth-sub">Bet with friends · for a good cause 💚</div>
 
         {/* Admin invite banner */}
         {isAdminInvite && (

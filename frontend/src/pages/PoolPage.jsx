@@ -5,10 +5,10 @@ import { useAuth } from '../lib/AuthContext.jsx';
 import { useToast } from '../hooks/useToast.jsx';
 import PaymentMethodCard from '../components/PaymentMethodCard.jsx';
 
-const MIN = 10000;
+const MIN = 2000;
 
 function fmtINR(n) {
-  return '₹' + Number(n || 0).toLocaleString('en-IN', { minimumFractionDigits:2, maximumFractionDigits:2 });
+  return '♡ ' + Number(n || 0).toLocaleString('en-IN', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' LB';
 }
 function fmtDate(d) {
   return new Date(d).toLocaleString('en-IN', { dateStyle:'short', timeStyle:'short' });
@@ -101,7 +101,7 @@ function AcknowledgeRow({ txn, onDone, toast }) {
             <div style={{display:'flex',gap:8,marginBottom:8,alignItems:'center'}}>
               <label style={{fontSize:12,color:'#888',whiteSpace:'nowrap'}}>Amount received:</label>
               <div style={{display:'flex',alignItems:'center',gap:4,background:'#fff',border:'1px solid #ddd',borderRadius:7,padding:'0 8px',flex:1,maxWidth:180}}>
-                <span style={{color:'#888'}}>₹</span>
+                <span style={{color:'#888'}}>♡ </span>
                 <input type="number" min="0" step="100"
                   value={amt} onChange={e => setAmt(e.target.value)}
                   style={{border:'none',background:'transparent',padding:'6px 4px',fontSize:13,fontWeight:500,outline:'none',width:'100%',color:'#111'}} />
@@ -117,7 +117,7 @@ function AcknowledgeRow({ txn, onDone, toast }) {
           {/* Admin note */}
           <div style={{display:'flex',gap:8,marginBottom:10,alignItems:'center'}}>
             <label style={{fontSize:12,color:'#888',whiteSpace:'nowrap'}}>Note:</label>
-            <input placeholder="e.g. Received via UPI ref #12345"
+            <input placeholder="e.g. Received in cash on Saturday"
               value={note} onChange={e => setNote(e.target.value)}
               style={{flex:1,padding:'6px 10px',border:'1px solid #ddd',borderRadius:7,fontSize:12,background:'#fff',color:'#111'}} />
           </div>
@@ -169,14 +169,14 @@ export default function PoolPage() {
   async function doPledge() {
     const amt = parseFloat(pledgeAmt);
     if (!amt || amt <= 0)         { toast('Enter a valid amount'); return; }
-    if (isFirstTime && amt < MIN) { toast('Minimum first commitment is ₹10,000'); return; }
-    if (!selectedPaymentMethod)   { toast('Select a payment method'); return; }
+    if (isFirstTime && amt < MIN) { toast('Minimum first commitment is ♡ 2,000 LB'); return; }
+    if (!selectedPaymentMethod)   { toast('Select a drop-off'); return; }
     setPledging(true);
     try {
       await api.pledge(amt, pledgeNote, selectedPaymentMethod);
       toast(isFirstTime
-        ? 'Welcome to the pool! ₹' + amt.toLocaleString('en-IN') + ' committed.'
-        : 'Top-up committed: ₹' + amt.toLocaleString('en-IN'));
+        ? 'Welcome to the pool! ♡ ' + amt.toLocaleString('en-IN') + ' committed.'
+        : 'Top-up committed: ♡ ' + amt.toLocaleString('en-IN'));
       setPledgeAmt(''); setPledgeNote(''); setSelectedPaymentMethod(null);
       load(); refreshMe();
     } catch(e) { toast(e.message); }
@@ -255,7 +255,7 @@ export default function PoolPage() {
           </div>
           {isFirstTime && (
             <div style={{fontSize:12,color:'#854F0B',marginBottom:10,background:'#fffbe8',padding:'8px 10px',borderRadius:7,border:'1px solid #f5d960'}}>
-              Minimum first commitment is <strong>₹10,000</strong>. Pay via UPI, bank transfer, or cash — then admin confirms receipt and credits your betting balance.
+              Minimum first commitment is <strong>♡ 2,000 LB</strong>. Pay the admin in person ("Love Bites") — then they confirm receipt and credits your betting balance.
             </div>
           )}
 
@@ -263,9 +263,9 @@ export default function PoolPage() {
           <div style={{fontSize:11,color:'#888',fontWeight:500,textTransform:'uppercase',letterSpacing:.5,marginBottom:6}}>Step 1 · Amount</div>
           <div style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:6}}>
             <div style={{display:'flex',alignItems:'center',gap:4,background:'#f8f8f8',border:'1px solid #ddd',borderRadius:8,padding:'0 10px',flex:1,minWidth:150}}>
-              <span style={{color:'#888'}}>₹</span>
+              <span style={{color:'#888'}}>♡ </span>
               <input type="number" min={isFirstTime ? MIN : 1} step="1000"
-                placeholder={isFirstTime ? '10,000 minimum' : 'Amount to add'}
+                placeholder={isFirstTime ? '2,000 minimum' : 'Amount to add'}
                 value={pledgeAmt} onChange={e => setPledgeAmt(e.target.value)}
                 style={{flex:1,border:'none',background:'transparent',padding:'9px 4px',fontSize:14,fontWeight:500,outline:'none',color:'#111'}} />
             </div>
@@ -282,10 +282,10 @@ export default function PoolPage() {
           {/* Step 2: pick payment method */}
           {parseFloat(pledgeAmt) > 0 && (
             <>
-              <div style={{fontSize:11,color:'#888',fontWeight:500,textTransform:'uppercase',letterSpacing:.5,margin:'14px 0 6px'}}>Step 2 · How are you paying?</div>
+              <div style={{fontSize:11,color:'#888',fontWeight:500,textTransform:'uppercase',letterSpacing:.5,margin:'14px 0 6px'}}>Step 2 · Where to pay (Love Bites)</div>
               {paymentMethods.length === 0 && (
                 <div style={{fontSize:12,color:'#888',background:'#fffbe8',padding:'8px 10px',borderRadius:7,border:'1px solid #f5d960',marginBottom:8}}>
-                  ⚠ No payment methods configured yet. Ask the admin to add UPI, bank, or cash options first.
+                  ⚠ No Love Bites drop-off set up yet. Ask the admin to add one first.
                 </div>
               )}
               {paymentMethods.map(m => (
@@ -308,9 +308,9 @@ export default function PoolPage() {
               onClick={doPledge}
               disabled={pledging || !selectedPaymentMethod || (isFirstTime && parseFloat(pledgeAmt) < MIN)}>
               {pledging ? 'Saving…' :
-                !selectedPaymentMethod  ? 'Select a payment method ↑' :
-                isFirstTime             ? `Commit ₹${parseFloat(pledgeAmt).toLocaleString('en-IN')}` :
-                                          `Top up ₹${parseFloat(pledgeAmt).toLocaleString('en-IN')}`}
+                !selectedPaymentMethod  ? 'Select a drop-off ↑' :
+                isFirstTime             ? `Commit ♡ ${parseFloat(pledgeAmt).toLocaleString('en-IN')} LB` :
+                                          `Top up ♡ ${parseFloat(pledgeAmt).toLocaleString('en-IN')} LB`}
             </button>
           )}
           {parseFloat(pledgeAmt) > 0 && selectedPaymentMethod && (
@@ -368,7 +368,7 @@ export default function PoolPage() {
             </select>
           </div>
           <div className="field" style={{marginBottom:0}}>
-            <label>Amount (₹)</label>
+            <label>Amount (♡ )</label>
             <input type="number" min="1" step="1" placeholder="0"
               value={txAmt} onChange={e => setTxAmt(e.target.value)} />
           </div>

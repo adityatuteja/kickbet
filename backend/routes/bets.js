@@ -32,7 +32,7 @@ router.post('/', requireAuth, async (req, res) => {
     const q = match.questions.find(q => q.id === p.questionId);
     if (!q) return res.status(400).json({ error: 'Invalid question' });
     if (amt < (q.minStake ?? 10))
-      return res.status(400).json({ error: `Minimum bet for "${q.text}" is ₹${q.minStake ?? 10}` });
+      return res.status(400).json({ error: `Minimum bet for "${q.text}" is ♡ ${q.minStake ?? 10} LB` });
   }
 
   const user = await prisma.user.findUnique({ where: { id: req.user.id } });
@@ -48,7 +48,7 @@ router.post('/', requireAuth, async (req, res) => {
   const delta     = totalStake - prevStake;
 
   if (delta > available)
-    return res.status(400).json({ error: `Insufficient balance. Available: ₹${available.toFixed(2)}` });
+    return res.status(400).json({ error: `Insufficient balance. Available: ♡ ${available.toFixed(2)} LB` });
 
   // Compute a LIVE projected payout for each pick (informational only — final is set at settlement)
   // We need current staked totals per option to project.
@@ -126,7 +126,7 @@ router.post('/', requireAuth, async (req, res) => {
 
 router.get('/my', requireAuth, async (req, res) => {
   const bets = await prisma.bet.findMany({
-    where:   { userId: req.user.id },
+    where:   { userId: req.user.id, matchId: { not: null } },  // match bets only; tournament bets live on /tournament/my
     include: {
       match: true,
       picks: { include: { question: true, option: true } }
